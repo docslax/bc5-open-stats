@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BC5Pin Admin</title>
+    <style>
+      :root { color-scheme: dark; font-family: Arial, sans-serif; }
+      body { margin: 0; background: linear-gradient(180deg, #020617, #111827); color: #e2e8f0; }
+      main { max-width: 1120px; margin: 0 auto; padding: 24px; }
+      .card { background: #111827; border: 1px solid #334155; border-radius: 18px; padding: 18px; box-shadow: 0 16px 30px rgba(15, 23, 42, 0.35); }
+      .top-row { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+      .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:16px; margin-top:16px; }
+      label { display:grid; gap:6px; font-size: 0.95rem; }
+      input, button { border-radius: 10px; border: 1px solid #475569; padding: 10px 12px; font-size: 1rem; }
+      button { background: #38bdf8; color: #082f49; font-weight: 700; cursor: pointer; }
+      button:hover { background: #7dd3fc; }
+      .mini-card { background: #0f172a; border: 1px solid #334155; border-radius: 14px; padding: 14px; }
+      .muted { color: #cbd5e1; }
+      #message { min-height: 1.2em; font-weight:700; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="card">
+        <div class="top-row">
+          <div>
+            <h1 style="margin: 0 0 6px 0;">BC5Pin Administration</h1>
+            <p class="muted" style="margin:0;">Create tournament years, locations, and teams from this admin console.</p>
+          </div>
+          <a href="/" style="color:#bae6fd; text-decoration:none;">← Back to home</a>
+        </div>
+
+        <div class="grid">
+          <article class="mini-card">
+            <h2 style="margin-top:0;">Create tournament year</h2>
+            <form id="tournamentForm" autocomplete="off">
+              <label>Season name <input name="name" required placeholder="2026 Summer Classic" /></label>
+              <label>Start date <input name="startDate" type="date" /></label>
+              <label>End date <input name="endDate" type="date" /></label>
+              <label>Primary location <input name="locations" placeholder="Port Coquitlam" /></label>
+              <button type="submit">Create tournament</button>
+            </form>
+            <p id="message" aria-live="polite"></p>
+          </article>
+
+          <article class="mini-card">
+            <h2 style="margin-top:0;">Existing tournaments</h2>
+            <div id="tournamentList">Loading…</div>
+          </article>
+        </div>
+      </section>
+    </main>
+    <script src="/admin/script.js"></script>
+  </body>
+</html>

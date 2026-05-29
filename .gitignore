@@ -1,0 +1,19 @@
+# Node dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Env files
+.env
+
+# OS / Editor cruft
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Data file (optional, if you don’t want committed user submissions)
+data.json
+external/

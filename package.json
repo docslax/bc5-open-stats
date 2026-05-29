@@ -1,0 +1,37 @@
+{
+  "name": "bc5-open-stats",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git@github:docslax/bc5-open-stats.git"
+  },
+  "license": "ISC",
+  "author": "docslax",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && node scripts/build-app.js",
+    "start": "npm run build && node server/index.js",
+    "dev": "npm run build && nodemon --watch server --exec \"node server/index.js\""
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.0",
+    "typescript": "^5.5.0"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^9.0.1",
+    "@types/react": "^19.2.15",
+    "@types/react-dom": "^19.2.3",
+    "body-parser": "^2.2.2",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-basic-auth": "^1.2.1",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "sequelize": "^6.37.8",
+    "sqlite3": "^6.0.1",
+    "xlsx": "^0.18.5"
+  }
+}
