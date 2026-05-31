@@ -4,13 +4,27 @@ const bodyParser = require("body-parser");
 const crypto = require("crypto");
 const path = require("path");
 const fs = require("fs");
-const { initializeDatabase, Bowler, Standing, User, verifyPassword } = require("./database");
+const {
+  initializeDatabase,
+  Bowler,
+  Standing,
+  User,
+  verifyPassword,
+} = require("./database");
 const tournamentSetupRoutes = require("./routes/tournamentSetup");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const IS_PRODUCTION = process.env.NODE_ENV === "production";
 const DATA_DIR = path.join(__dirname, "../data");
 const DATA_FILE = path.join(DATA_DIR, "scores.json");
+
+app.set("trust proxy", 1);
+
+function isSecureRequest(req) {
+  if (req.secure) return true;
+  return String(req.headers["x-forwarded-proto"] || "").includes("https");
+}
 
 function ensureDataFile() {
   fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -32,7 +46,9 @@ function saveEntries(entries) {
 function normalizeGames(entry) {
   const rawGames = Array.isArray(entry.games)
     ? entry.games
-    : [entry.game1, entry.game2, entry.game3].filter((value) => value !== undefined && value !== null);
+    : [entry.game1, entry.game2, entry.game3].filter(
+        (value) => value !== undefined && value !== null,
+      );
 
   return rawGames.map((value) => Number(value) || 0);
 }
@@ -57,14 +73,19 @@ function calculateStandings(entries) {
   });
 
   return rows
-    .sort((a, b) => b.total - a.total || b.average - a.average || a.player.localeCompare(b.player))
+    .sort(
+      (a, b) =>
+        b.total - a.total ||
+        b.average - a.average ||
+        a.player.localeCompare(b.player),
+    )
     .map((row, index) => ({ ...row, rank: index + 1 }));
 }
 
 app.use((req, res, next) => {
-  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
-  res.set('Pragma', 'no-cache');
-  res.set('Expires', '0');
+  res.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
+  res.set("Pragma", "no-cache");
+  res.set("Expires", "0");
   next();
 });
 app.use(bodyParser.json());
@@ -72,8 +93,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Clean invisible or junk characters from redirect links
 app.use((req, res, next) => {
-  const invisibleCharPattern = /%E2%81%A0|[\u200B-\u200F\u202A-\u202E\u2060-\u206F]/i;
-  const cleanRoutes = ['/'];
+  const invisibleCharPattern =
+    /%E2%81%A0|[\u200B-\u200F\u202A-\u202E\u2060-\u206F]/i;
+  const cleanRoutes = ["/"];
 
   for (const route of cleanRoutes) {
     // only redirect if the path matches that route AND contains invisible characters
@@ -96,7 +118,7 @@ function parseCookies(cookieHeader = "") {
       .map((cookie) => {
         const [name, ...rest] = cookie.split("=");
         return [name, rest.join("=")];
-      })
+      }),
   );
 }
 
@@ -129,14 +151,40 @@ function requireAdmin(req, res, next) {
   next();
 }
 
-app.use("/admin", requireAdmin, express.static(path.join(__dirname, "../admin")));
+function requireAdminMutation(req, res, next) {
+  if (["GET", "HEAD", "OPTIONS"].includes(req.method)) {
+    return next();
+  }
+
+  const session = getSession(req);
+  if (!session) {
+    return res.status(401).json({ error: "Admin login required." });
+  }
+
+  req.adminSession = session;
+  return next();
+}
+
+app.use(
+  "/admin",
+  requireAdmin,
+  express.static(path.join(__dirname, "../admin")),
+);
 
 app.post("/api/admin/login", async (req, res) => {
   try {
+    if (IS_PRODUCTION && !isSecureRequest(req)) {
+      return res
+        .status(400)
+        .json({ error: "Login requires HTTPS in production." });
+    }
+
     const { username, password } = req.body;
 
     if (!username || !password) {
-      return res.status(400).json({ error: "Username and password are required." });
+      return res
+        .status(400)
+        .json({ error: "Username and password are required." });
     }
 
     const user = await User.findOne({ where: { username } });
@@ -148,10 +196,19 @@ app.post("/api/admin/login", async (req, res) => {
     res.cookie("bc5_admin_token", token, {
       httpOnly: true,
       sameSite: "lax",
+      secure: IS_PRODUCTION,
       maxAge: 60 * 60 * 1000,
     });
 
-    res.json({ ok: true, user: { id: user.id, username: user.username, role: user.role, email: user.email } });
+    res.json({
+      ok: true,
+      user: {
+        id: user.id,
+        username: user.username,
+        role: user.role,
+        email: user.email,
+      },
+    });
   } catch (error) {
     console.error("Admin login failed", error);
     res.status(500).json({ error: "Unable to log in." });
@@ -180,7 +237,12 @@ app.get("/api/health", async (req, res) => {
     await initializeDatabase();
     const bowlerCount = await Bowler.count();
     const standingCount = await Standing.count();
-    res.json({ ok: true, entries: loadEntries().length, bowlerCount, standingCount });
+    res.json({
+      ok: true,
+      entries: loadEntries().length,
+      bowlerCount,
+      standingCount,
+    });
   } catch (error) {
     console.error("Health check failed", error);
     res.status(500).json({ ok: false, error: "Database unavailable" });
@@ -197,7 +259,16 @@ app.get("/api/standings", (req, res) => {
 
 app.post("/api/entries", (req, res) => {
   try {
-    const { player, team, division = "Open", week = "1", games, game1, game2, game3 } = req.body;
+    const {
+      player,
+      team,
+      division = "Open",
+      week = "1",
+      games,
+      game1,
+      game2,
+      game3,
+    } = req.body;
 
     if (!player || !team) {
       return res.status(400).json({ error: "Player and team are required." });
@@ -262,6 +333,8 @@ function broadcastUpdate() {
 
 // Serve TypeScript-built static assets for the web app
 app.use(express.static(path.join(__dirname, "../public")));
+app.use("/api/tournaments", requireAdminMutation);
+app.use("/api/bowlers", requireAdminMutation);
 app.use(tournamentSetupRoutes);
 
 app.get(/.*/, (req, res) => {

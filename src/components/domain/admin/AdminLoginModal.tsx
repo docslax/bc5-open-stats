@@ -1,5 +1,14 @@
-import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField } from '@mui/material';
-import { useState } from 'react';
+import {
+  Alert,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Stack,
+  TextField,
+} from "@mui/material";
+import { useState } from "react";
 
 interface AdminLoginModalProps {
   open: boolean;
@@ -7,37 +16,41 @@ interface AdminLoginModalProps {
   onSuccess: () => void;
 }
 
-export function AdminLoginModal({ open, onClose, onSuccess }: AdminLoginModalProps) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+export function AdminLoginModal({
+  open,
+  onClose,
+  onSuccess,
+}: AdminLoginModalProps) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
-      const response = await fetch('/api/admin/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
+      const response = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ username, password }),
       });
       const result = await response.json();
 
       if (!response.ok) {
-        setError(result.error || 'Unable to sign in.');
+        setError(result.error || "Unable to sign in.");
         return;
       }
 
       onSuccess();
       onClose();
-      setUsername('');
-      setPassword('');
+      setUsername("");
+      setPassword("");
     } catch (caughtError) {
-      setError('Unable to reach the login service.');
+      setError("Unable to reach the login service.");
       console.error(caughtError);
     } finally {
       setLoading(false);
@@ -45,20 +58,44 @@ export function AdminLoginModal({ open, onClose, onSuccess }: AdminLoginModalPro
   }
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
+    <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
       <DialogTitle>Admin sign in</DialogTitle>
       <form onSubmit={handleSubmit}>
-        <DialogContent>
-          <Stack spacing={2}>
+        <DialogContent sx={{ pt: 1, pb: 1 }}>
+          <Stack spacing={1.5}>
             {error ? <Alert severity="error">{error}</Alert> : null}
-            <TextField label="Username" value={username} onChange={(event) => setUsername(event.target.value)} required fullWidth />
-            <TextField label="Password" type="password" value={password} onChange={(event) => setPassword(event.target.value)} required fullWidth />
+            <TextField
+              label="Username"
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
+              required
+              fullWidth
+            />
+            <TextField
+              label="Password"
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              required
+              fullWidth
+            />
+            <DialogActions
+              sx={{ px: 0, pb: 0, pt: 0.5, justifyContent: "flex-end" }}
+            >
+              <Button onClick={onClose} color="inherit" size="small">
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={loading}
+                size="small"
+              >
+                {loading ? "Signing in…" : "Sign in"}
+              </Button>
+            </DialogActions>
           </Stack>
         </DialogContent>
-        <DialogActions sx={{ px: 3, pb: 2 }}>
-          <Button onClick={onClose} color="inherit">Cancel</Button>
-          <Button type="submit" variant="contained" disabled={loading}>{loading ? 'Signing in…' : 'Sign in'}</Button>
-        </DialogActions>
       </form>
     </Dialog>
   );
