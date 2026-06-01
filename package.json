@@ -12,7 +12,8 @@
   "scripts": {
     "build": "tsc && node scripts/build-app.js",
     "start": "npm run build && node server/index.js",
-    "dev": "npm run build && nodemon --watch server --exec \"node server/index.js\""
+    "dev": "node scripts/watch-app.js & nodemon --watch server --exec 'node server/index.js'",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "esbuild": "^0.28.0",
@@ -28,6 +29,9 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "express-basic-auth": "^1.2.1",
+    "mobx": "^6.15.4",
+    "mobx-react-lite": "^4.1.1",
+    "nodemon": "^3.1.14",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "sequelize": "^6.37.8",

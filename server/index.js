@@ -1,29 +1,28 @@
-require("dotenv").config();
-const express = require("express");
-const bodyParser = require("body-parser");
-const crypto = require("crypto");
-const path = require("path");
-const fs = require("fs");
-const {
-  initializeDatabase,
-  Bowler,
-  Standing,
-  User,
-  verifyPassword,
-} = require("./database");
-const tournamentSetupRoutes = require("./routes/tournamentSetup");
+require('dotenv').config();
+const express = require('express');
+const bodyParser = require('body-parser');
+const crypto = require('crypto');
+const path = require('path');
+const fs = require('fs');
+const { initializeDatabase, Bowler, Standing, User, verifyPassword } = require('./database');
+const tournamentSetupRoutes = require('./routes/tournamentSetup');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-const IS_PRODUCTION = process.env.NODE_ENV === "production";
-const DATA_DIR = path.join(__dirname, "../data");
-const DATA_FILE = path.join(DATA_DIR, "scores.json");
 
-app.set("trust proxy", 1);
+if (process.env.NODE_ENV !== 'production') {
+  const { devReloadMiddleware } = require('./dev-reload');
+  app.get('/__dev-reload', devReloadMiddleware);
+}
+const PORT = process.env.PORT || 3000;
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
+const DATA_DIR = path.join(__dirname, '../data');
+const DATA_FILE = path.join(DATA_DIR, 'scores.json');
+
+app.set('trust proxy', 1);
 
 function isSecureRequest(req) {
   if (req.secure) return true;
-  return String(req.headers["x-forwarded-proto"] || "").includes("https");
+  return String(req.headers['x-forwarded-proto'] || '').includes('https');
 }
 
 function ensureDataFile() {
@@ -35,7 +34,7 @@ function ensureDataFile() {
 
 function loadEntries() {
   ensureDataFile();
-  return JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
+  return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
 }
 
 function saveEntries(entries) {
@@ -46,9 +45,7 @@ function saveEntries(entries) {
 function normalizeGames(entry) {
   const rawGames = Array.isArray(entry.games)
     ? entry.games
-    : [entry.game1, entry.game2, entry.game3].filter(
-        (value) => value !== undefined && value !== null,
-      );
+    : [entry.game1, entry.game2, entry.game3].filter((value) => value !== undefined && value !== null);
 
   return rawGames.map((value) => Number(value) || 0);
 }
@@ -61,10 +58,10 @@ function calculateStandings(entries) {
 
     return {
       id: entry.id || `${entry.player}-${entry.team}-${entry.createdAt}`,
-      player: entry.player || "Unknown bowler",
-      team: entry.team || "Unassigned",
-      division: entry.division || "Open",
-      week: entry.week || "-",
+      player: entry.player || 'Unknown bowler',
+      team: entry.team || 'Unassigned',
+      division: entry.division || 'Open',
+      week: entry.week || '-',
       games,
       total,
       average: Number(average.toFixed(2)),
@@ -73,19 +70,14 @@ function calculateStandings(entries) {
   });
 
   return rows
-    .sort(
-      (a, b) =>
-        b.total - a.total ||
-        b.average - a.average ||
-        a.player.localeCompare(b.player),
-    )
+    .sort((a, b) => b.total - a.total || b.average - a.average || a.player.localeCompare(b.player))
     .map((row, index) => ({ ...row, rank: index + 1 }));
 }
 
 app.use((req, res, next) => {
-  res.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
-  res.set("Pragma", "no-cache");
-  res.set("Expires", "0");
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+  res.set('Pragma', 'no-cache');
+  res.set('Expires', '0');
   next();
 });
 app.use(bodyParser.json());
@@ -93,9 +85,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Clean invisible or junk characters from redirect links
 app.use((req, res, next) => {
-  const invisibleCharPattern =
-    /%E2%81%A0|[\u200B-\u200F\u202A-\u202E\u2060-\u206F]/i;
-  const cleanRoutes = ["/"];
+  const invisibleCharPattern = /%E2%81%A0|[\u200B-\u200F\u202A-\u202E\u2060-\u206F]/i;
+  const cleanRoutes = ['/'];
 
   for (const route of cleanRoutes) {
     // only redirect if the path matches that route AND contains invisible characters
@@ -109,21 +100,21 @@ app.use((req, res, next) => {
 
 const sessions = new Map();
 
-function parseCookies(cookieHeader = "") {
+function parseCookies(cookieHeader = '') {
   return Object.fromEntries(
     cookieHeader
-      .split(";")
+      .split(';')
       .map((cookie) => cookie.trim())
       .filter(Boolean)
       .map((cookie) => {
-        const [name, ...rest] = cookie.split("=");
-        return [name, rest.join("=")];
+        const [name, ...rest] = cookie.split('=');
+        return [name, rest.join('=')];
       }),
   );
 }
 
 function getSession(req) {
-  const token = parseCookies(req.headers.cookie || "").bc5_admin_token;
+  const token = parseCookies(req.headers.cookie || '').bc5_admin_token;
   if (!token) return null;
 
   return sessions.get(token) || null;
@@ -144,7 +135,7 @@ function createSession(user) {
 function requireAdmin(req, res, next) {
   const session = getSession(req);
   if (!session) {
-    return res.redirect("/?login=required");
+    return res.redirect('/?login=required');
   }
 
   req.adminSession = session;
@@ -152,50 +143,44 @@ function requireAdmin(req, res, next) {
 }
 
 function requireAdminMutation(req, res, next) {
-  if (["GET", "HEAD", "OPTIONS"].includes(req.method)) {
+  if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) {
     return next();
   }
 
   const session = getSession(req);
   if (!session) {
-    return res.status(401).json({ error: "Admin login required." });
+    return res.status(401).json({ error: 'Admin login required.' });
   }
 
   req.adminSession = session;
   return next();
 }
 
-app.use(
-  "/admin",
-  requireAdmin,
-  express.static(path.join(__dirname, "../admin")),
-);
+app.get(/^\/admin(?:\/.*)?$/, requireAdmin, (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/index.html'));
+});
 
-app.post("/api/admin/login", async (req, res) => {
+app.post('/api/admin/login', async (req, res) => {
   try {
     if (IS_PRODUCTION && !isSecureRequest(req)) {
-      return res
-        .status(400)
-        .json({ error: "Login requires HTTPS in production." });
+      return res.status(400).json({ error: 'Login requires HTTPS in production.' });
     }
 
     const { username, password } = req.body;
 
     if (!username || !password) {
-      return res
-        .status(400)
-        .json({ error: "Username and password are required." });
+      return res.status(400).json({ error: 'Username and password are required.' });
     }
 
     const user = await User.findOne({ where: { username } });
     if (!user || !verifyPassword(password, user.passwordHash)) {
-      return res.status(401).json({ error: "Invalid username or password." });
+      return res.status(401).json({ error: 'Invalid username or password.' });
     }
 
     const token = createSession(user);
-    res.cookie("bc5_admin_token", token, {
+    res.cookie('bc5_admin_token', token, {
       httpOnly: true,
-      sameSite: "lax",
+      sameSite: 'lax',
       secure: IS_PRODUCTION,
       maxAge: 60 * 60 * 1000,
     });
@@ -210,29 +195,29 @@ app.post("/api/admin/login", async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Admin login failed", error);
-    res.status(500).json({ error: "Unable to log in." });
+    console.error('Admin login failed', error);
+    res.status(500).json({ error: 'Unable to log in.' });
   }
 });
 
-app.post("/api/admin/logout", (req, res) => {
-  const token = parseCookies(req.headers.cookie || "").bc5_admin_token;
+app.post('/api/admin/logout', (req, res) => {
+  const token = parseCookies(req.headers.cookie || '').bc5_admin_token;
   if (token) sessions.delete(token);
 
-  res.clearCookie("bc5_admin_token");
+  res.clearCookie('bc5_admin_token');
   res.json({ ok: true });
 });
 
-app.get("/api/admin/me", (req, res) => {
+app.get('/api/admin/me', (req, res) => {
   const session = getSession(req);
   if (!session) {
-    return res.status(401).json({ error: "Not logged in." });
+    return res.status(401).json({ error: 'Not logged in.' });
   }
 
   res.json({ ok: true, user: session });
 });
 
-app.get("/api/health", async (req, res) => {
+app.get('/api/health', async (req, res) => {
   try {
     await initializeDatabase();
     const bowlerCount = await Bowler.count();
@@ -244,34 +229,25 @@ app.get("/api/health", async (req, res) => {
       standingCount,
     });
   } catch (error) {
-    console.error("Health check failed", error);
-    res.status(500).json({ ok: false, error: "Database unavailable" });
+    console.error('Health check failed', error);
+    res.status(500).json({ ok: false, error: 'Database unavailable' });
   }
 });
 
-app.get("/api/entries", (req, res) => {
+app.get('/api/entries', (req, res) => {
   res.json(loadEntries());
 });
 
-app.get("/api/standings", (req, res) => {
+app.get('/api/standings', (req, res) => {
   res.json({ standings: calculateStandings(loadEntries()) });
 });
 
-app.post("/api/entries", (req, res) => {
+app.post('/api/entries', (req, res) => {
   try {
-    const {
-      player,
-      team,
-      division = "Open",
-      week = "1",
-      games,
-      game1,
-      game2,
-      game3,
-    } = req.body;
+    const { player, team, division = 'Open', week = '1', games, game1, game2, game3 } = req.body;
 
     if (!player || !team) {
-      return res.status(400).json({ error: "Player and team are required." });
+      return res.status(400).json({ error: 'Player and team are required.' });
     }
 
     const normalizedGames = Array.isArray(games)
@@ -283,8 +259,8 @@ app.post("/api/entries", (req, res) => {
       id: `${Date.now()}`,
       player: player.trim(),
       team: team.trim(),
-      division: division.trim() || "Open",
-      week: `${week}`.trim() || "1",
+      division: division.trim() || 'Open',
+      week: `${week}`.trim() || '1',
       games: normalizedGames,
       createdAt: new Date().toISOString(),
     };
@@ -295,28 +271,28 @@ app.post("/api/entries", (req, res) => {
 
     res.json({ success: true, entry, standings: calculateStandings(entries) });
   } catch (error) {
-    console.error("Error saving entry", error);
-    res.status(500).json({ error: "Unable to save score entry." });
+    console.error('Error saving entry', error);
+    res.status(500).json({ error: 'Unable to save score entry.' });
   }
 });
 
 const clients = [];
 
 // SSE endpoint
-app.get("/events", (req, res) => {
-  res.setHeader("Content-Type", "text/event-stream");
-  res.setHeader("Cache-Control", "no-cache, no-transform");
-  res.setHeader("Connection", "keep-alive");
-  res.setHeader("X-Accel-Buffering", "no");
-  res.setHeader("Content-Encoding", "identity"); // 👈 force no compression
+app.get('/events', (req, res) => {
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache, no-transform');
+  res.setHeader('Connection', 'keep-alive');
+  res.setHeader('X-Accel-Buffering', 'no');
+  res.setHeader('Content-Encoding', 'identity'); // 👈 force no compression
 
   if (res.flushHeaders) res.flushHeaders();
 
-  res.write("data: connected\n\n");
+  res.write('data: connected\n\n');
 
   clients.push(res);
 
-  req.on("close", () => {
+  req.on('close', () => {
     const i = clients.indexOf(res);
     if (i !== -1) clients.splice(i, 1);
   });
@@ -324,21 +300,20 @@ app.get("/events", (req, res) => {
 
 // heartbeat
 setInterval(() => {
-  clients.forEach((res) => res.write(": keepalive\n\n"));
+  clients.forEach((res) => res.write(': keepalive\n\n'));
 }, 15000);
 
 function broadcastUpdate() {
-  clients.forEach((res) => res.write("data: update\n\n"));
+  clients.forEach((res) => res.write('data: update\n\n'));
 }
 
-// Serve TypeScript-built static assets for the web app
-app.use(express.static(path.join(__dirname, "../public")));
-app.use("/api/tournaments", requireAdminMutation);
-app.use("/api/bowlers", requireAdminMutation);
+// Serve static assets for the web app
+app.use(express.static(path.join(__dirname, '../public')));
+app.use('/api/tournaments', requireAdminMutation);
 app.use(tournamentSetupRoutes);
 
 app.get(/.*/, (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/index.html"));
+  res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
 async function start() {
@@ -348,7 +323,7 @@ async function start() {
       console.log(`✅ Server running at http://localhost:${PORT}`);
     });
   } catch (error) {
-    console.error("Failed to start server", error);
+    console.error('Failed to start server', error);
     process.exit(1);
   }
 }

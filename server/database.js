@@ -43,6 +43,14 @@ const Location = sequelize.define('Location', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  laneCount: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  notes: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   tournamentYearId: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -54,6 +62,10 @@ const Bowler = sequelize.define('Bowler', {
     type: DataTypes.INTEGER,
     allowNull: false,
     unique: true,
+  },
+  c5Number: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
   name: {
     type: DataTypes.STRING,
@@ -96,6 +108,14 @@ const TournamentBowler = sequelize.define('TournamentBowler', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  c5Number: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   zone: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -103,6 +123,11 @@ const TournamentBowler = sequelize.define('TournamentBowler', {
   division: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  isCoach: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
   },
   role: {
     type: DataTypes.STRING,
@@ -293,15 +318,196 @@ async function ensureDefaultAdminUser() {
   }
 }
 
+async function safeDescribeTable(queryInterface, tableName) {
+  try {
+    return await queryInterface.describeTable(tableName);
+  } catch (error) {
+    if (String(error.message || '').includes('No description found for')) {
+      return null;
+    }
+    throw error;
+  }
+}
+
+async function rebuildTournamentBowlersTableWithoutLegacyFks() {
+  await sequelize.query('PRAGMA foreign_keys = OFF');
+  try {
+    await sequelize.transaction(async (transaction) => {
+      await sequelize.query(
+        `
+          CREATE TABLE TournamentBowlers_new (
+            id INTEGER PRIMARY KEY,
+            tournamentYearId INTEGER NOT NULL REFERENCES TournamentYears(id),
+            teamId INTEGER,
+            bowlerId INTEGER NOT NULL,
+            c5Number VARCHAR(255),
+            name VARCHAR(255),
+            zone INTEGER NOT NULL DEFAULT 0,
+            division VARCHAR(255) NOT NULL DEFAULT 'Open',
+            isCoach TINYINT(1) NOT NULL DEFAULT 0,
+            role VARCHAR(255) NOT NULL DEFAULT 'player',
+            isSinglesEligible TINYINT(1) NOT NULL DEFAULT 0,
+            createdAt DATETIME NOT NULL,
+            updatedAt DATETIME NOT NULL
+          )
+        `,
+        { transaction },
+      );
+
+      await sequelize.query(
+        `
+          INSERT INTO TournamentBowlers_new
+          (
+            id,
+            tournamentYearId,
+            teamId,
+            bowlerId,
+            c5Number,
+            name,
+            zone,
+            division,
+            isCoach,
+            role,
+            isSinglesEligible,
+            createdAt,
+            updatedAt
+          )
+          SELECT
+            id,
+            tournamentYearId,
+            NULL,
+            bowlerId,
+            c5Number,
+            name,
+            COALESCE(zone, 0),
+            COALESCE(division, 'Open'),
+            COALESCE(isCoach, 0),
+            COALESCE(role, 'player'),
+            COALESCE(isSinglesEligible, 0),
+            createdAt,
+            updatedAt
+          FROM TournamentBowlers
+        `,
+        { transaction },
+      );
+
+      await sequelize.query('DROP TABLE TournamentBowlers', { transaction });
+      await sequelize.query('ALTER TABLE TournamentBowlers_new RENAME TO TournamentBowlers', { transaction });
+    });
+  } finally {
+    await sequelize.query('PRAGMA foreign_keys = ON');
+  }
+}
+
+async function rebuildLaneDrawSlotsTableWithoutLegacyFks() {
+  await sequelize.query('PRAGMA foreign_keys = OFF');
+  try {
+    await sequelize.transaction(async (transaction) => {
+      await sequelize.query(
+        `
+          CREATE TABLE LaneDrawSlots_new (
+            id INTEGER PRIMARY KEY,
+            tournamentYearId INTEGER NOT NULL REFERENCES TournamentYears(id),
+            division VARCHAR(255) NOT NULL,
+            eventType VARCHAR(255) NOT NULL DEFAULT 'team',
+            blockCode VARCHAR(255) NOT NULL,
+            slotCode VARCHAR(255),
+            lane INTEGER NOT NULL,
+            sideATeamId INTEGER,
+            sideABowlerId INTEGER,
+            sideBTeamId INTEGER,
+            sideBBowlerId INTEGER,
+            scheduledAt DATETIME,
+            status VARCHAR(255) NOT NULL DEFAULT 'draft',
+            createdAt DATETIME NOT NULL,
+            updatedAt DATETIME NOT NULL
+          )
+        `,
+        { transaction },
+      );
+
+      await sequelize.query(
+        `
+          INSERT INTO LaneDrawSlots_new
+          (
+            id,
+            tournamentYearId,
+            division,
+            eventType,
+            blockCode,
+            slotCode,
+            lane,
+            sideATeamId,
+            sideABowlerId,
+            sideBTeamId,
+            sideBBowlerId,
+            scheduledAt,
+            status,
+            createdAt,
+            updatedAt
+          )
+          SELECT
+            id,
+            tournamentYearId,
+            division,
+            COALESCE(eventType, 'team'),
+            blockCode,
+            slotCode,
+            lane,
+            NULL,
+            sideABowlerId,
+            NULL,
+            sideBBowlerId,
+            scheduledAt,
+            COALESCE(status, 'draft'),
+            createdAt,
+            updatedAt
+          FROM LaneDrawSlots
+        `,
+        { transaction },
+      );
+
+      await sequelize.query('DROP TABLE LaneDrawSlots', { transaction });
+      await sequelize.query('ALTER TABLE LaneDrawSlots_new RENAME TO LaneDrawSlots', { transaction });
+    });
+  } finally {
+    await sequelize.query('PRAGMA foreign_keys = ON');
+  }
+}
+
 async function ensureLegacySchema() {
   const queryInterface = sequelize.getQueryInterface();
-  const tournamentYearsTable = await queryInterface.describeTable('TournamentYears');
+  const tournamentYearsTable = await safeDescribeTable(queryInterface, 'TournamentYears');
+  const locationsTable = await safeDescribeTable(queryInterface, 'Locations');
+  const bowlersTable = await safeDescribeTable(queryInterface, 'Bowlers');
+  const teamsTable = await safeDescribeTable(queryInterface, 'Teams');
 
-  if (!tournamentYearsTable.isLocked) {
+  if (tournamentYearsTable && !tournamentYearsTable.isLocked) {
     await queryInterface.addColumn('TournamentYears', 'isLocked', {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
+    });
+  }
+
+  if (locationsTable && !locationsTable.laneCount) {
+    await queryInterface.addColumn('Locations', 'laneCount', {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    });
+  }
+
+  if (locationsTable && !locationsTable.notes) {
+    await queryInterface.addColumn('Locations', 'notes', {
+      type: DataTypes.STRING,
+      allowNull: true,
+    });
+  }
+
+  if (bowlersTable && !bowlersTable.c5Number) {
+    await queryInterface.addColumn('Bowlers', 'c5Number', {
+      type: DataTypes.STRING,
+      allowNull: true,
     });
   }
 
@@ -310,6 +516,20 @@ async function ensureLegacySchema() {
   if (!tournamentBowlerTable.teamId) {
     await queryInterface.addColumn('TournamentBowlers', 'teamId', {
       type: DataTypes.INTEGER,
+      allowNull: true,
+    });
+  }
+
+  if (!tournamentBowlerTable.c5Number) {
+    await queryInterface.addColumn('TournamentBowlers', 'c5Number', {
+      type: DataTypes.STRING,
+      allowNull: true,
+    });
+  }
+
+  if (!tournamentBowlerTable.name) {
+    await queryInterface.addColumn('TournamentBowlers', 'name', {
+      type: DataTypes.STRING,
       allowNull: true,
     });
   }
@@ -328,8 +548,40 @@ async function ensureLegacySchema() {
     });
   }
 
+  if (!tournamentBowlerTable.isCoach) {
+    await queryInterface.addColumn('TournamentBowlers', 'isCoach', {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    });
+  }
+
+  const tournamentBowlerFks = await sequelize.query("PRAGMA foreign_key_list('TournamentBowlers')", {
+    type: Sequelize.QueryTypes.SELECT,
+  });
+  if (tournamentBowlerFks.some((fk) => fk.table === 'Bowlers' || fk.table === 'Teams')) {
+    await rebuildTournamentBowlersTableWithoutLegacyFks();
+  }
+
+  const laneDrawSlotFks = await sequelize.query("PRAGMA foreign_key_list('LaneDrawSlots')", {
+    type: Sequelize.QueryTypes.SELECT,
+  });
+  if (laneDrawSlotFks.some((fk) => fk.table === 'Bowlers' || fk.table === 'Teams')) {
+    await rebuildLaneDrawSlotsTableWithoutLegacyFks();
+  }
+
   // Backfill legacy rows so follow-on writes can enforce current constraints.
   await sequelize.query("UPDATE TournamentBowlers SET zone = COALESCE(zone, 0), division = COALESCE(division, 'Open')");
+
+  if (bowlersTable) {
+    await sequelize.query(`
+      UPDATE TournamentBowlers
+      SET
+        c5Number = COALESCE(c5Number, (SELECT Bowlers.c5Number FROM Bowlers WHERE Bowlers.bowlerId = TournamentBowlers.bowlerId)),
+        name = COALESCE(name, (SELECT Bowlers.name FROM Bowlers WHERE Bowlers.bowlerId = TournamentBowlers.bowlerId)),
+        isCoach = COALESCE(isCoach, (SELECT Bowlers.isCoach FROM Bowlers WHERE Bowlers.bowlerId = TournamentBowlers.bowlerId), 0)
+    `);
+  }
 
   try {
     await queryInterface.addIndex('TournamentBowlers', ['tournamentYearId', 'bowlerId', 'division'], {
@@ -342,14 +594,16 @@ async function ensureLegacySchema() {
     }
   }
 
-  try {
-    await queryInterface.addIndex('Teams', ['tournamentYearId', 'zone', 'division', 'name'], {
-      name: 'teams_unique_name_by_division_zone',
-      unique: true,
-    });
-  } catch (error) {
-    if (!String(error.message || '').includes('already exists')) {
-      throw error;
+  if (teamsTable) {
+    try {
+      await queryInterface.addIndex('Teams', ['tournamentYearId', 'zone', 'division', 'name'], {
+        name: 'teams_unique_name_by_division_zone',
+        unique: true,
+      });
+    } catch (error) {
+      if (!String(error.message || '').includes('already exists')) {
+        throw error;
+      }
     }
   }
 
@@ -383,53 +637,6 @@ TournamentBowler.belongsTo(TournamentYear, { foreignKey: 'tournamentYearId' });
 
 TournamentYear.hasMany(LaneDrawSlot, { foreignKey: 'tournamentYearId' });
 LaneDrawSlot.belongsTo(TournamentYear, { foreignKey: 'tournamentYearId' });
-
-Bowler.hasMany(TournamentBowler, {
-  foreignKey: 'bowlerId',
-  sourceKey: 'bowlerId',
-});
-TournamentBowler.belongsTo(Bowler, {
-  foreignKey: 'bowlerId',
-  targetKey: 'bowlerId',
-});
-
-Bowler.hasMany(Team, {
-  foreignKey: 'coachBowlerId',
-  sourceKey: 'bowlerId',
-});
-Team.belongsTo(Bowler, {
-  foreignKey: 'coachBowlerId',
-  targetKey: 'bowlerId',
-});
-
-Team.hasMany(TournamentBowler, { foreignKey: 'teamId' });
-TournamentBowler.belongsTo(Team, { foreignKey: 'teamId' });
-
-Team.hasMany(LaneDrawSlot, { foreignKey: 'sideATeamId', as: 'sideATeamSlots' });
-Team.hasMany(LaneDrawSlot, { foreignKey: 'sideBTeamId', as: 'sideBTeamSlots' });
-LaneDrawSlot.belongsTo(Team, { foreignKey: 'sideATeamId', as: 'sideATeam' });
-LaneDrawSlot.belongsTo(Team, { foreignKey: 'sideBTeamId', as: 'sideBTeam' });
-
-Bowler.hasMany(LaneDrawSlot, {
-  foreignKey: 'sideABowlerId',
-  sourceKey: 'bowlerId',
-  as: 'sideABowlerSlots',
-});
-Bowler.hasMany(LaneDrawSlot, {
-  foreignKey: 'sideBBowlerId',
-  sourceKey: 'bowlerId',
-  as: 'sideBBowlerSlots',
-});
-LaneDrawSlot.belongsTo(Bowler, {
-  foreignKey: 'sideABowlerId',
-  targetKey: 'bowlerId',
-  as: 'sideABowler',
-});
-LaneDrawSlot.belongsTo(Bowler, {
-  foreignKey: 'sideBBowlerId',
-  targetKey: 'bowlerId',
-  as: 'sideBBowler',
-});
 
 module.exports = {
   sequelize,

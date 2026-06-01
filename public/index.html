@@ -1,35 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BC5Pin Stats</title>
     <style>
-      :root { color-scheme: light; font-family: Arial, sans-serif; }
-      body { margin: 0; background: #0f172a; color: #e2e8f0; }
-      main { max-width: 1100px; margin: 0 auto; padding: 24px; }
-      .card { background: #111827; border: 1px solid #334155; border-radius: 14px; padding: 18px; box-shadow: 0 10px 25px rgba(0,0,0,0.25); }
-      h1, h2 { margin-top: 0; }
-      form { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-top: 16px; }
-      label { display: grid; gap: 6px; font-size: 0.95rem; }
-      input, button { border-radius: 10px; border: 1px solid #475569; padding: 10px 12px; font-size: 1rem; }
-      button { background: #22c55e; color: #052e16; font-weight: 700; cursor: pointer; }
-      button:hover { background: #4ade80; }
-      table { width: 100%; border-collapse: collapse; margin-top: 18px; }
-      th, td { padding: 10px; border-bottom: 1px solid #334155; text-align: left; }
-      th { color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem; }
-      #message { min-height: 1.2em; color: #86efac; font-weight: 600; }
-      .muted { color: #cbd5e1; font-size: 0.95rem; }
+      /* Prevent background flash before React/MUI hydrates */
+      body {
+        margin: 0;
+        background: #fffff0;
+      }
     </style>
   </head>
   <body>
-    <main>
-      <section class="card">
-        <h1>BC5Pin Stats MVP</h1>
-        <p class="muted">Enter the latest scores here and the standings list updates immediately.</p>
-        <div id="root">Loading interface…</div>
-      </section>
-    </main>
+    <div id="root"></div>
     <script src="/app.bundle.js"></script>
   </body>
 </html>
