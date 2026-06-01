@@ -22,8 +22,9 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { CheckIcon, XIcon, WarningDiamondIcon } from '@phosphor-icons/react';
 import { observer } from 'mobx-react-lite';
-import { type SyntheticEvent, useEffect, useMemo, useState } from 'react';
+import { JSX, type SyntheticEvent, useEffect, useMemo, useState } from 'react';
 import {
   TOURNAMENT_POSITION_OPTIONS,
   TOURNAMENT_TEAM_OPTIONS,
@@ -48,10 +49,10 @@ interface BowlersTabProps {
   store: TournamentAdminStore;
 }
 
-function statusMarker(status: TeamProgress['status']): string {
-  if (status === 'complete') return '✓';
-  if (status === 'partial') return '⚠';
-  return '✖';
+function statusMarker(status: TeamProgress['status']): JSX.Element {
+  if (status === 'complete') return <CheckIcon color="green" />;
+  if (status === 'partial') return <WarningDiamondIcon color="orange" />;
+  return <XIcon color="red" />;
 }
 
 function getTeamLabel(team: string): string {
@@ -419,7 +420,7 @@ export const BowlersTab = observer(function BowlersTab({ store }: BowlersTabProp
                           <span>
                             {statusMarker(teamItem.status)} {getTeamLabel(teamItem.team)}
                           </span>
-                          <span>{teamItem.filledPositions}/6</span>
+                          <span>{teamItem.filledPositions}/7</span>
                         </Button>
                       );
                     })}
@@ -450,12 +451,12 @@ export const BowlersTab = observer(function BowlersTab({ store }: BowlersTabProp
                   Zone {selectedTeamProgress.zone} {'>'} {getTeamLabel(selectedTeamProgress.team)}
                 </Typography>
                 <Typography color="text.secondary" sx={{ mt: 0.5 }}>
-                  {selectedTeamProgress.filledPositions} of 6 roster positions filled
+                  {selectedTeamProgress.filledPositions} positions filled
                 </Typography>
                 <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
                   <Chip
                     size="small"
-                    label={`${statusMarker(selectedTeamProgress.status)} ${selectedTeamProgress.status.toUpperCase()}`}
+                    label={`${selectedTeamProgress.status.toUpperCase()}`}
                     color={
                       selectedTeamProgress.isComplete
                         ? 'success'

@@ -87,7 +87,7 @@
           try {
             testStringCoercion(value);
             var JSCompiler_inline_result = false;
-          } catch (e) {
+          } catch (e7) {
             JSCompiler_inline_result = true;
           }
           if (JSCompiler_inline_result) {
@@ -317,8 +317,8 @@
             invokeCallback = children;
             callback = callback(invokeCallback);
             var childKey = "" === nameSoFar ? "." + getElementKey(invokeCallback, 0) : nameSoFar;
-            isArrayImpl(callback) ? (escapedPrefix = "", null != childKey && (escapedPrefix = childKey.replace(userProvidedKeyEscapeRegex, "$&/") + "/"), mapIntoArray(callback, array2, escapedPrefix, "", function(c) {
-              return c;
+            isArrayImpl(callback) ? (escapedPrefix = "", null != childKey && (escapedPrefix = childKey.replace(userProvidedKeyEscapeRegex, "$&/") + "/"), mapIntoArray(callback, array2, escapedPrefix, "", function(c2) {
+              return c2;
             })) : null != callback && (isValidElement13(callback) && (null != callback.key && (invokeCallback && invokeCallback.key === callback.key || checkKeyStringCoercion(callback.key)), escapedPrefix = cloneAndReplaceKey(
               callback,
               escapedPrefix + (null == callback.key || invokeCallback && invokeCallback.key === callback.key ? "" : ("" + callback.key).replace(
@@ -610,11 +610,11 @@
             );
           },
           count: function(children) {
-            var n = 0;
+            var n4 = 0;
             mapChildren(children, function() {
-              n++;
+              n4++;
             });
-            return n;
+            return n4;
           },
           toArray: function(children) {
             return mapChildren(children, function(child) {
@@ -1086,7 +1086,7 @@
           var ContextProvider = REACT_PROVIDER_TYPE;
           var Element2 = REACT_ELEMENT_TYPE;
           var ForwardRef2 = REACT_FORWARD_REF_TYPE;
-          var Fragment17 = REACT_FRAGMENT_TYPE;
+          var Fragment20 = REACT_FRAGMENT_TYPE;
           var Lazy = REACT_LAZY_TYPE;
           var Memo2 = REACT_MEMO_TYPE;
           var Portal3 = REACT_PORTAL_TYPE;
@@ -1145,7 +1145,7 @@
           exports.ContextProvider = ContextProvider;
           exports.Element = Element2;
           exports.ForwardRef = ForwardRef2;
-          exports.Fragment = Fragment17;
+          exports.Fragment = Fragment20;
           exports.Lazy = Lazy;
           exports.Memo = Memo2;
           exports.Portal = Portal3;
@@ -1261,7 +1261,7 @@
               var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
               try {
                 defineProperty3(targetComponent, key, descriptor);
-              } catch (e) {
+              } catch (e7) {
               }
             }
           }
@@ -1341,7 +1341,7 @@
           var ContextProvider = REACT_PROVIDER_TYPE;
           var Element2 = REACT_ELEMENT_TYPE;
           var ForwardRef2 = REACT_FORWARD_REF_TYPE;
-          var Fragment17 = REACT_FRAGMENT_TYPE;
+          var Fragment20 = REACT_FRAGMENT_TYPE;
           var Lazy = REACT_LAZY_TYPE;
           var Memo2 = REACT_MEMO_TYPE;
           var Portal3 = REACT_PORTAL_TYPE;
@@ -1400,7 +1400,7 @@
           exports.ContextProvider = ContextProvider;
           exports.Element = Element2;
           exports.ForwardRef = ForwardRef2;
-          exports.Fragment = Fragment17;
+          exports.Fragment = Fragment20;
           exports.Lazy = Lazy;
           exports.Memo = Memo2;
           exports.Portal = Portal3;
@@ -1466,8 +1466,8 @@
           for (var i = 0; i < 10; i++) {
             test2["_" + String.fromCharCode(i)] = i;
           }
-          var order2 = Object.getOwnPropertyNames(test2).map(function(n) {
-            return test2[n];
+          var order2 = Object.getOwnPropertyNames(test2).map(function(n4) {
+            return test2[n4];
           });
           if (order2.join("") !== "0123456789") {
             return false;
@@ -2107,7 +2107,7 @@
           try {
             testStringCoercion(value);
             var JSCompiler_inline_result = false;
-          } catch (e) {
+          } catch (e7) {
             JSCompiler_inline_result = true;
           }
           if (JSCompiler_inline_result) {
@@ -2438,7 +2438,7 @@
           try {
             testStringCoercion(key);
             var JSCompiler_inline_result = false;
-          } catch (e) {
+          } catch (e7) {
             JSCompiler_inline_result = true;
           }
           JSCompiler_inline_result && (console.error(
@@ -2652,8 +2652,8 @@
         exports.requestFormReset = function(form) {
           Internals.d.r(form);
         };
-        exports.unstable_batchedUpdates = function(fn, a) {
-          return fn(a);
+        exports.unstable_batchedUpdates = function(fn, a4) {
+          return fn(a4);
         };
         exports.useFormState = function(action2, initialState, permalink) {
           return resolveDispatcher().useFormState(action2, initialState, permalink);
@@ -2770,9 +2770,9 @@
           }
           return first;
         }
-        function compare(a, b) {
-          var diff = a.sortIndex - b.sortIndex;
-          return 0 !== diff ? diff : a.id - b.id;
+        function compare(a4, b) {
+          var diff = a4.sortIndex - b.sortIndex;
+          return 0 !== diff ? diff : a4.id - b.id;
         }
         function advanceTimers(currentTime) {
           for (var timer = peek2(timerQueue); null !== timer; ) {
@@ -3089,55 +3089,55 @@
               throw Error("Unable to find node on an unmounted component.");
             return alternate !== fiber ? null : fiber;
           }
-          for (var a = fiber, b = alternate; ; ) {
-            var parentA = a.return;
+          for (var a4 = fiber, b = alternate; ; ) {
+            var parentA = a4.return;
             if (null === parentA) break;
             var parentB = parentA.alternate;
             if (null === parentB) {
               b = parentA.return;
               if (null !== b) {
-                a = b;
+                a4 = b;
                 continue;
               }
               break;
             }
             if (parentA.child === parentB.child) {
               for (parentB = parentA.child; parentB; ) {
-                if (parentB === a) return assertIsMounted(parentA), fiber;
+                if (parentB === a4) return assertIsMounted(parentA), fiber;
                 if (parentB === b) return assertIsMounted(parentA), alternate;
                 parentB = parentB.sibling;
               }
               throw Error("Unable to find node on an unmounted component.");
             }
-            if (a.return !== b.return) a = parentA, b = parentB;
+            if (a4.return !== b.return) a4 = parentA, b = parentB;
             else {
               for (var didFindChild = false, _child = parentA.child; _child; ) {
-                if (_child === a) {
+                if (_child === a4) {
                   didFindChild = true;
-                  a = parentA;
+                  a4 = parentA;
                   b = parentB;
                   break;
                 }
                 if (_child === b) {
                   didFindChild = true;
                   b = parentA;
-                  a = parentB;
+                  a4 = parentB;
                   break;
                 }
                 _child = _child.sibling;
               }
               if (!didFindChild) {
                 for (_child = parentB.child; _child; ) {
-                  if (_child === a) {
+                  if (_child === a4) {
                     didFindChild = true;
-                    a = parentB;
+                    a4 = parentB;
                     b = parentA;
                     break;
                   }
                   if (_child === b) {
                     didFindChild = true;
                     b = parentB;
-                    a = parentA;
+                    a4 = parentA;
                     break;
                   }
                   _child = _child.sibling;
@@ -3148,14 +3148,14 @@
                   );
               }
             }
-            if (a.alternate !== b)
+            if (a4.alternate !== b)
               throw Error(
                 "Return fibers should always be each others' alternates. This error is likely caused by a bug in React. Please file an issue."
               );
           }
-          if (3 !== a.tag)
+          if (3 !== a4.tag)
             throw Error("Unable to find node on an unmounted component.");
-          return a.stateNode.current === a ? fiber : alternate;
+          return a4.stateNode.current === a4 ? fiber : alternate;
         }
         function findCurrentHostFiberImpl(node2) {
           var tag = node2.tag;
@@ -3296,11 +3296,11 @@
           fiberStack[index$jscomp$0] = fiber;
           cursor2.current = value;
         }
-        function requiredContext(c) {
-          null === c && console.error(
+        function requiredContext(c2) {
+          null === c2 && console.error(
             "Expected host context to exist. This error is likely caused by a bug in React. Please file an issue."
           );
-          return c;
+          return c2;
         }
         function pushHostContainer(fiber, nextRootInstance) {
           push2(rootInstanceStackCursor, nextRootInstance, fiber);
@@ -3687,7 +3687,7 @@
         function willCoercionThrow(value) {
           try {
             return testStringCoercion(value), false;
-          } catch (e) {
+          } catch (e7) {
             return true;
           }
         }
@@ -4233,7 +4233,7 @@
           if ("undefined" === typeof doc) return null;
           try {
             return doc.activeElement || doc.body;
-          } catch (e) {
+          } catch (e7) {
             return doc.body;
           }
         }
@@ -5291,16 +5291,16 @@
             }
           }
         }
-        function batchedUpdates$1(fn, a, b) {
-          if (isInsideEventHandler) return fn(a, b);
+        function batchedUpdates$1(fn, a4, b) {
+          if (isInsideEventHandler) return fn(a4, b);
           isInsideEventHandler = true;
           try {
-            var JSCompiler_inline_result = fn(a);
+            var JSCompiler_inline_result = fn(a4);
             return JSCompiler_inline_result;
           } finally {
             if (isInsideEventHandler = false, null !== restoreTarget || null !== restoreQueue) {
-              if (flushSyncWork$1(), restoreTarget && (a = restoreTarget, fn = restoreQueue, restoreQueue = restoreTarget = null, restoreStateOfTarget(a), fn))
-                for (a = 0; a < fn.length; a++) restoreStateOfTarget(fn[a]);
+              if (flushSyncWork$1(), restoreTarget && (a4 = restoreTarget, fn = restoreQueue, restoreQueue = restoreTarget = null, restoreStateOfTarget(a4), fn))
+                for (a4 = 0; a4 < fn.length; a4++) restoreStateOfTarget(fn[a4]);
             }
           }
         }
@@ -12091,11 +12091,11 @@
                   addendum = null === lastEffect ? " You returned null. If your effect does not require clean up, return undefined (or nothing)." : "function" === typeof lastEffect.then ? "\n\nIt looks like you wrote " + hookName + "(async () => ...) or returned a Promise. Instead, write the async function inside your effect and call it immediately:\n\n" + hookName + "(() => {\n  async function fetchData() {\n    // You can await here\n    const response = await MyAPI.getData(someId);\n    // ...\n  }\n  fetchData();\n}, [someId]); // Or [] if effect doesn't need props or state\n\nLearn more about data fetching with Hooks: https://react.dev/link/hooks-data-fetching" : " You returned: " + lastEffect;
                   runWithFiberInDEV(
                     finishedWork,
-                    function(n, a) {
+                    function(n4, a4) {
                       console.error(
                         "%s must not return anything besides a function, which is used for clean-up.%s",
-                        n,
-                        a
+                        n4,
+                        a4
                       );
                     },
                     hookName,
@@ -19402,8 +19402,8 @@
         function markRetryLaneImpl(fiber, retryLane) {
           fiber = fiber.memoizedState;
           if (null !== fiber && null !== fiber.dehydrated) {
-            var a = fiber.retryLane;
-            fiber.retryLane = 0 !== a && a < retryLane ? a : retryLane;
+            var a4 = fiber.retryLane;
+            fiber.retryLane = 0 !== a4 && a4 < retryLane ? a4 : retryLane;
           }
         }
         function markRetryLaneIfNotHydrated(fiber, retryLane) {
@@ -20752,7 +20752,7 @@
             });
             window.addEventListener("test", options$jscomp$0, options$jscomp$0);
             window.removeEventListener("test", options$jscomp$0, options$jscomp$0);
-          } catch (e) {
+          } catch (e7) {
             passiveBrowserEventsSupported = false;
           }
         var root = null, startText = null, fallbackText = null, EventInterface = {
@@ -23084,12 +23084,12 @@
 
   // node_modules/@babel/runtime/helpers/esm/extends.js
   function _extends() {
-    return _extends = Object.assign ? Object.assign.bind() : function(n) {
-      for (var e = 1; e < arguments.length; e++) {
-        var t = arguments[e];
-        for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
+    return _extends = Object.assign ? Object.assign.bind() : function(n4) {
+      for (var e7 = 1; e7 < arguments.length; e7++) {
+        var t = arguments[e7];
+        for (var r3 in t) ({}).hasOwnProperty.call(t, r3) && (n4[r3] = t[r3]);
       }
-      return n;
+      return n4;
     }, _extends.apply(null, arguments);
   }
 
@@ -23162,7 +23162,7 @@
         var sheet = sheetForTag(tag);
         try {
           sheet.insertRule(rule, sheet.cssRules.length);
-        } catch (e) {
+        } catch (e7) {
         }
       } else {
         tag.appendChild(document.createTextNode(rule));
@@ -24303,9 +24303,9 @@
     return React3.createElement.apply(null, createElementArgArray);
   };
   (function(_jsx88) {
-    var JSX;
+    var JSX2;
     /* @__PURE__ */ (function(_JSX) {
-    })(JSX || (JSX = _jsx88.JSX || (_jsx88.JSX = {})));
+    })(JSX2 || (JSX2 = _jsx88.JSX || (_jsx88.JSX = {})));
   })(jsx || (jsx = {}));
   var Global = /* @__PURE__ */ withEmotionCache(function(props, cache) {
     var styles6 = props.styles;
@@ -24842,9 +24842,9 @@
         keys.push(key);
       }
     }
-    keys.sort((a, b) => {
+    keys.sort((a4, b) => {
       var _a3, _b2;
-      return +(((_a3 = a.match(MIN_WIDTH_PATTERN)) == null ? void 0 : _a3[1]) || 0) - +(((_b2 = b.match(MIN_WIDTH_PATTERN)) == null ? void 0 : _b2[1]) || 0);
+      return +(((_a3 = a4.match(MIN_WIDTH_PATTERN)) == null ? void 0 : _a3[1]) || 0) - +(((_b2 = b.match(MIN_WIDTH_PATTERN)) == null ? void 0 : _b2[1]) || 0);
     });
     const result = css2;
     for (let i = 0; i < keys.length; i += 1) {
@@ -26218,18 +26218,18 @@ For example, \`@sm\` or \`@600\` or \`@40rem/sidebar\`.`)
   var React7 = __toESM(require_react(), 1);
 
   // node_modules/clsx/dist/clsx.mjs
-  function r(e) {
-    var t, f, n = "";
-    if ("string" == typeof e || "number" == typeof e) n += e;
-    else if ("object" == typeof e) if (Array.isArray(e)) {
-      var o = e.length;
-      for (t = 0; t < o; t++) e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
-    } else for (f in e) e[f] && (n && (n += " "), n += f);
-    return n;
+  function r(e7) {
+    var t, f, n4 = "";
+    if ("string" == typeof e7 || "number" == typeof e7) n4 += e7;
+    else if ("object" == typeof e7) if (Array.isArray(e7)) {
+      var o5 = e7.length;
+      for (t = 0; t < o5; t++) e7[t] && (f = r(e7[t])) && (n4 && (n4 += " "), n4 += f);
+    } else for (f in e7) e7[f] && (n4 && (n4 += " "), n4 += f);
+    return n4;
   }
   function clsx() {
-    for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
-    return n;
+    for (var e7, t, f = 0, n4 = "", o5 = arguments.length; f < o5; f++) (e7 = arguments[f]) && (t = r(e7)) && (n4 && (n4 += " "), n4 += t);
+    return n4;
   }
   var clsx_default = clsx;
 
@@ -26683,15 +26683,15 @@ For example, \`@sm\` or \`@600\` or \`@40rem/sidebar\`.`)
     const re = new RegExp(`.{1,${color2.length >= 6 ? 2 : 1}}`, "g");
     let colors = color2.match(re);
     if (colors && colors[0].length === 1) {
-      colors = colors.map((n) => n + n);
+      colors = colors.map((n4) => n4 + n4);
     }
     if (true) {
       if (color2.length !== color2.trim().length) {
         console.error(`MUI: The color: "${color2}" is invalid. Make sure the color input doesn't contain leading/trailing space.`);
       }
     }
-    return colors ? `rgb${colors.length === 4 ? "a" : ""}(${colors.map((n, index) => {
-      return index < 3 ? parseInt(n, 16) : Math.round(parseInt(n, 16) / 255 * 1e3) / 1e3;
+    return colors ? `rgb${colors.length === 4 ? "a" : ""}(${colors.map((n4, index) => {
+      return index < 3 ? parseInt(n4, 16) : Math.round(parseInt(n4, 16) / 255 * 1e3) / 1e3;
     }).join(", ")})` : "";
   }
   function decomposeColor(color2) {
@@ -26752,7 +26752,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
       values: values3
     } = color2;
     if (type.includes("rgb")) {
-      values3 = values3.map((n, i) => i < 3 ? parseInt(n, 10) : n);
+      values3 = values3.map((n4, i) => i < 3 ? parseInt(n4, 10) : n4);
     } else if (type.includes("hsl")) {
       values3[1] = `${values3[1]}%`;
       values3[2] = `${values3[2]}%`;
@@ -26772,8 +26772,8 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     const h = values3[0];
     const s = values3[1] / 100;
     const l = values3[2] / 100;
-    const a = s * Math.min(l, 1 - l);
-    const f = (n, k = (n + h / 30) % 12) => l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    const a4 = s * Math.min(l, 1 - l);
+    const f = (n4, k = (n4 + h / 30) % 12) => l - a4 * Math.max(Math.min(k - 3, 9 - k, 1), -1);
     let type = "rgb";
     const rgb = [Math.round(f(0) * 255), Math.round(f(8) * 255), Math.round(f(4) * 255)];
     if (color2.type === "hsla") {
@@ -30649,26 +30649,26 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   var import_prop_types19 = __toESM(require_prop_types(), 1);
 
   // node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
-  function _objectWithoutPropertiesLoose(r2, e) {
-    if (null == r2) return {};
+  function _objectWithoutPropertiesLoose(r3, e7) {
+    if (null == r3) return {};
     var t = {};
-    for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
-      if (-1 !== e.indexOf(n)) continue;
-      t[n] = r2[n];
+    for (var n4 in r3) if ({}.hasOwnProperty.call(r3, n4)) {
+      if (-1 !== e7.indexOf(n4)) continue;
+      t[n4] = r3[n4];
     }
     return t;
   }
 
   // node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js
-  function _setPrototypeOf(t, e) {
-    return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function(t2, e2) {
-      return t2.__proto__ = e2, t2;
-    }, _setPrototypeOf(t, e);
+  function _setPrototypeOf(t, e7) {
+    return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function(t2, e8) {
+      return t2.__proto__ = e8, t2;
+    }, _setPrototypeOf(t, e7);
   }
 
   // node_modules/@babel/runtime/helpers/esm/inheritsLoose.js
-  function _inheritsLoose(t, o) {
-    t.prototype = Object.create(o.prototype), t.prototype.constructor = t, _setPrototypeOf(t, o);
+  function _inheritsLoose(t, o5) {
+    t.prototype = Object.create(o5.prototype), t.prototype.constructor = t, _setPrototypeOf(t, o5);
   }
 
   // node_modules/react-transition-group/esm/Transition.js
@@ -31120,9 +31120,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   var Transition_default = Transition;
 
   // node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
-  function _assertThisInitialized(e) {
-    if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    return e;
+  function _assertThisInitialized(e7) {
+    if (void 0 === e7) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    return e7;
   }
 
   // node_modules/react-transition-group/esm/TransitionGroup.js
@@ -31136,8 +31136,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       return mapFn && (0, import_react8.isValidElement)(child) ? mapFn(child) : child;
     };
     var result = /* @__PURE__ */ Object.create(null);
-    if (children) import_react8.Children.map(children, function(c) {
-      return c;
+    if (children) import_react8.Children.map(children, function(c2) {
+      return c2;
     }).forEach(function(child) {
       result[child.key] = mapper(child);
     });
@@ -32956,13 +32956,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function createControlledPromise() {
     let resolve;
     let reject;
-    const p = new Promise((resolveFn, rejectFn) => {
+    const p2 = new Promise((resolveFn, rejectFn) => {
       resolve = resolveFn;
       reject = rejectFn;
     });
-    p.resolve = resolve;
-    p.reject = reject;
-    return p;
+    p2.resolve = resolve;
+    p2.reject = reject;
+    return p2;
   }
 
   // node_modules/@mui/material/ButtonBase/TouchRipple.mjs
@@ -39497,7 +39497,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         });
       }
     });
-    return orderedTabNodes.sort((a, b) => a.tabIndex === b.tabIndex ? a.documentOrder - b.documentOrder : a.tabIndex - b.tabIndex).map((a) => a.node).concat(regularTabNodes);
+    return orderedTabNodes.sort((a4, b) => a4.tabIndex === b.tabIndex ? a4.documentOrder - b.documentOrder : a4.tabIndex - b.tabIndex).map((a4) => a4.node).concat(regularTabNodes);
   }
   function defaultIsEnabled() {
     return true;
@@ -44413,18 +44413,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
 
   // node_modules/@mui/utils/fastObjectShallowCompare/fastObjectShallowCompare.mjs
   var is = Object.is;
-  function fastObjectShallowCompare(a, b) {
-    if (a === b) {
+  function fastObjectShallowCompare(a4, b) {
+    if (a4 === b) {
       return true;
     }
-    if (!(a instanceof Object) || !(b instanceof Object)) {
+    if (!(a4 instanceof Object) || !(b instanceof Object)) {
       return false;
     }
     let aLength = 0;
     let bLength = 0;
-    for (const key in a) {
+    for (const key in a4) {
       aLength += 1;
-      if (!is(a[key], b[key])) {
+      if (!is(a4[key], b[key])) {
         return false;
       }
       if (!(key in b)) {
@@ -44757,11 +44757,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function isConnectedItem(item) {
     return item.element != null && item.element.isConnected;
   }
-  function sortByDocumentPosition(a, b) {
-    if (a === b) {
+  function sortByDocumentPosition(a4, b) {
+    if (a4 === b) {
       return 0;
     }
-    const position2 = a.compareDocumentPosition(b);
+    const position2 = a4.compareDocumentPosition(b);
     if (position2 & Node.DOCUMENT_POSITION_FOLLOWING || position2 & Node.DOCUMENT_POSITION_CONTAINED_BY) {
       return -1;
     }
@@ -44816,11 +44816,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
 
   // node_modules/@mui/material/Select/utils/areEqualValues.mjs
-  function areEqualValues(a, b) {
+  function areEqualValues(a4, b) {
     if (typeof b === "object" && b !== null) {
-      return a === b;
+      return a4 === b;
     }
-    return String(a) === String(b);
+    return String(a4) === String(b);
   }
 
   // node_modules/@mui/material/Select/utils/SelectFocusSourceContext.mjs
@@ -45138,7 +45138,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return offset;
   }
   function getTransformOriginValue(transformOrigin) {
-    return [transformOrigin.horizontal, transformOrigin.vertical].map((n) => typeof n === "number" ? `${n}px` : n).join(" ");
+    return [transformOrigin.horizontal, transformOrigin.vertical].map((n4) => typeof n4 === "number" ? `${n4}px` : n4).join(" ");
   }
   function resolveAnchorEl(anchorEl) {
     return typeof anchorEl === "function" ? anchorEl() : anchorEl;
@@ -51097,7 +51097,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
 
   // src/app.tsx
   var import_client = __toESM(require_client());
-  var import_react20 = __toESM(require_react());
+  var import_react22 = __toESM(require_react());
 
   // src/components/domain/admin/AdminBodyPlaceholder.tsx
   var import_jsx_runtime90 = __toESM(require_jsx_runtime());
@@ -51275,9 +51275,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       args[_key - 1] = arguments[_key];
     }
     if (true) {
-      var e = typeof error === "string" ? error : errors[error];
-      if (typeof e === "function") e = e.apply(null, args);
-      throw new Error("[MobX] " + e);
+      var e7 = typeof error === "string" ? error : errors[error];
+      if (typeof e7 === "function") e7 = e7.apply(null, args);
+      throw new Error("[MobX] " + e7);
     }
     throw new Error(typeof error === "number" ? "[MobX] minified error nr: " + error + (args.length ? " " + args.map(String).join(",") : "") + ". Find the full error at: https://github.com/mobxjs/mobx/blob/main/packages/mobx/src/errors.ts" : "[MobX] " + error);
   }
@@ -51457,53 +51457,53 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
     return flags;
   }
-  function _arrayLikeToArray(r2, a) {
-    (null == a || a > r2.length) && (a = r2.length);
-    for (var e = 0, n = Array(a); e < a; e++) n[e] = r2[e];
-    return n;
+  function _arrayLikeToArray(r3, a4) {
+    (null == a4 || a4 > r3.length) && (a4 = r3.length);
+    for (var e7 = 0, n4 = Array(a4); e7 < a4; e7++) n4[e7] = r3[e7];
+    return n4;
   }
-  function _construct(t, e, r2) {
+  function _construct(t, e7, r3) {
     if (_isNativeReflectConstruct()) return Reflect.construct.apply(null, arguments);
-    var o = [null];
-    o.push.apply(o, e);
-    var p = new (t.bind.apply(t, o))();
-    return r2 && _setPrototypeOf2(p, r2.prototype), p;
+    var o5 = [null];
+    o5.push.apply(o5, e7);
+    var p2 = new (t.bind.apply(t, o5))();
+    return r3 && _setPrototypeOf2(p2, r3.prototype), p2;
   }
-  function _defineProperties(e, r2) {
-    for (var t = 0; t < r2.length; t++) {
-      var o = r2[t];
-      o.enumerable = o.enumerable || false, o.configurable = true, "value" in o && (o.writable = true), Object.defineProperty(e, _toPropertyKey(o.key), o);
+  function _defineProperties(e7, r3) {
+    for (var t = 0; t < r3.length; t++) {
+      var o5 = r3[t];
+      o5.enumerable = o5.enumerable || false, o5.configurable = true, "value" in o5 && (o5.writable = true), Object.defineProperty(e7, _toPropertyKey(o5.key), o5);
     }
   }
-  function _createClass(e, r2, t) {
-    return r2 && _defineProperties(e.prototype, r2), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", {
+  function _createClass(e7, r3, t) {
+    return r3 && _defineProperties(e7.prototype, r3), t && _defineProperties(e7, t), Object.defineProperty(e7, "prototype", {
       writable: false
-    }), e;
+    }), e7;
   }
-  function _createForOfIteratorHelperLoose(r2, e) {
-    var t = "undefined" != typeof Symbol && r2[Symbol.iterator] || r2["@@iterator"];
-    if (t) return (t = t.call(r2)).next.bind(t);
-    if (Array.isArray(r2) || (t = _unsupportedIterableToArray(r2)) || e && r2 && "number" == typeof r2.length) {
-      t && (r2 = t);
-      var o = 0;
+  function _createForOfIteratorHelperLoose(r3, e7) {
+    var t = "undefined" != typeof Symbol && r3[Symbol.iterator] || r3["@@iterator"];
+    if (t) return (t = t.call(r3)).next.bind(t);
+    if (Array.isArray(r3) || (t = _unsupportedIterableToArray(r3)) || e7 && r3 && "number" == typeof r3.length) {
+      t && (r3 = t);
+      var o5 = 0;
       return function() {
-        return o >= r2.length ? {
+        return o5 >= r3.length ? {
           done: true
         } : {
           done: false,
-          value: r2[o++]
+          value: r3[o5++]
         };
       };
     }
     throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
   function _extends2() {
-    return _extends2 = Object.assign ? Object.assign.bind() : function(n) {
-      for (var e = 1; e < arguments.length; e++) {
-        var t = arguments[e];
-        for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
+    return _extends2 = Object.assign ? Object.assign.bind() : function(n4) {
+      for (var e7 = 1; e7 < arguments.length; e7++) {
+        var t = arguments[e7];
+        for (var r3 in t) ({}).hasOwnProperty.call(t, r3) && (n4[r3] = t[r3]);
       }
-      return n;
+      return n4;
     }, _extends2.apply(null, arguments);
   }
   function _getPrototypeOf(t) {
@@ -51511,13 +51511,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       return t2.__proto__ || Object.getPrototypeOf(t2);
     }, _getPrototypeOf(t);
   }
-  function _inheritsLoose2(t, o) {
-    t.prototype = Object.create(o.prototype), t.prototype.constructor = t, _setPrototypeOf2(t, o);
+  function _inheritsLoose2(t, o5) {
+    t.prototype = Object.create(o5.prototype), t.prototype.constructor = t, _setPrototypeOf2(t, o5);
   }
   function _isNativeFunction(t) {
     try {
       return -1 !== Function.toString.call(t).indexOf("[native code]");
-    } catch (n) {
+    } catch (n4) {
       return "function" == typeof t;
     }
   }
@@ -51531,40 +51531,40 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       return !!t;
     })();
   }
-  function _setPrototypeOf2(t, e) {
-    return _setPrototypeOf2 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function(t2, e2) {
-      return t2.__proto__ = e2, t2;
-    }, _setPrototypeOf2(t, e);
+  function _setPrototypeOf2(t, e7) {
+    return _setPrototypeOf2 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function(t2, e8) {
+      return t2.__proto__ = e8, t2;
+    }, _setPrototypeOf2(t, e7);
   }
-  function _toPrimitive(t, r2) {
+  function _toPrimitive(t, r3) {
     if ("object" != typeof t || !t) return t;
-    var e = t[Symbol.toPrimitive];
-    if (void 0 !== e) {
-      var i = e.call(t, r2 || "default");
+    var e7 = t[Symbol.toPrimitive];
+    if (void 0 !== e7) {
+      var i = e7.call(t, r3 || "default");
       if ("object" != typeof i) return i;
       throw new TypeError("@@toPrimitive must return a primitive value.");
     }
-    return ("string" === r2 ? String : Number)(t);
+    return ("string" === r3 ? String : Number)(t);
   }
   function _toPropertyKey(t) {
     var i = _toPrimitive(t, "string");
     return "symbol" == typeof i ? i : i + "";
   }
-  function _unsupportedIterableToArray(r2, a) {
-    if (r2) {
-      if ("string" == typeof r2) return _arrayLikeToArray(r2, a);
-      var t = {}.toString.call(r2).slice(8, -1);
-      return "Object" === t && r2.constructor && (t = r2.constructor.name), "Map" === t || "Set" === t ? Array.from(r2) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r2, a) : void 0;
+  function _unsupportedIterableToArray(r3, a4) {
+    if (r3) {
+      if ("string" == typeof r3) return _arrayLikeToArray(r3, a4);
+      var t = {}.toString.call(r3).slice(8, -1);
+      return "Object" === t && r3.constructor && (t = r3.constructor.name), "Map" === t || "Set" === t ? Array.from(r3) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r3, a4) : void 0;
     }
   }
   function _wrapNativeSuper(t) {
-    var r2 = "function" == typeof Map ? /* @__PURE__ */ new Map() : void 0;
+    var r3 = "function" == typeof Map ? /* @__PURE__ */ new Map() : void 0;
     return _wrapNativeSuper = function(t2) {
       if (null === t2 || !_isNativeFunction(t2)) return t2;
       if ("function" != typeof t2) throw new TypeError("Super expression must either be null or a function");
-      if (void 0 !== r2) {
-        if (r2.has(t2)) return r2.get(t2);
-        r2.set(t2, Wrapper);
+      if (void 0 !== r3) {
+        if (r3.has(t2)) return r3.get(t2);
+        r3.set(t2, Wrapper);
       }
       function Wrapper() {
         return _construct(t2, arguments, _getPrototypeOf(this).constructor);
@@ -51712,20 +51712,20 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
     return atom;
   }
-  function identityComparer(a, b) {
-    return a === b;
+  function identityComparer(a4, b) {
+    return a4 === b;
   }
-  function structuralComparer(a, b) {
-    return deepEqual(a, b);
+  function structuralComparer(a4, b) {
+    return deepEqual(a4, b);
   }
-  function shallowComparer(a, b) {
-    return deepEqual(a, b, 1);
+  function shallowComparer(a4, b) {
+    return deepEqual(a4, b, 1);
   }
-  function defaultComparer(a, b) {
+  function defaultComparer(a4, b) {
     if (Object.is) {
-      return Object.is(a, b);
+      return Object.is(a4, b);
     }
-    return a === b ? a !== 0 || 1 / a === 1 / b : a !== a && b !== b;
+    return a4 === b ? a4 !== 0 || 1 / a4 === 1 / b : a4 !== a4 && b !== b;
   }
   var comparer = {
     identity: identityComparer,
@@ -52249,20 +52249,20 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   assign2(createObservable, observableDecoratorAnnotation);
   var observableFactories = {
     box: function box(value, options) {
-      var o = asCreateObservableOptions(options);
-      return new ObservableValue(value, getEnhancerFromOptions(o), o.name, true, o.equals);
+      var o5 = asCreateObservableOptions(options);
+      return new ObservableValue(value, getEnhancerFromOptions(o5), o5.name, true, o5.equals);
     },
     array: function array(initialValues, options) {
-      var o = asCreateObservableOptions(options);
-      return (globalState.useProxies === false || o.proxy === false ? createLegacyArray : createObservableArray)(initialValues, getEnhancerFromOptions(o), o.name);
+      var o5 = asCreateObservableOptions(options);
+      return (globalState.useProxies === false || o5.proxy === false ? createLegacyArray : createObservableArray)(initialValues, getEnhancerFromOptions(o5), o5.name);
     },
     map: function map(initialValues, options) {
-      var o = asCreateObservableOptions(options);
-      return new ObservableMap(initialValues, getEnhancerFromOptions(o), o.name);
+      var o5 = asCreateObservableOptions(options);
+      return new ObservableMap(initialValues, getEnhancerFromOptions(o5), o5.name);
     },
     set: function set(initialValues, options) {
-      var o = asCreateObservableOptions(options);
-      return new ObservableSet(initialValues, getEnhancerFromOptions(o), o.name);
+      var o5 = asCreateObservableOptions(options);
+      return new ObservableSet(initialValues, getEnhancerFromOptions(o5), o5.name);
     },
     object: function object(props, decorators, options) {
       return initObservable(function() {
@@ -52686,8 +52686,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         } else {
           try {
             res = this.derivation.call(this.scope_);
-          } catch (e) {
-            res = new CaughtException(e);
+          } catch (e7) {
+            res = new CaughtException(e7);
           }
         }
       }
@@ -52811,8 +52811,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     this.cause = void 0;
     this.cause = cause;
   };
-  function isCaughtException(e) {
-    return e instanceof CaughtException;
+  function isCaughtException(e7) {
+    return e7 instanceof CaughtException;
   }
   function shouldCompute(derivation) {
     switch (derivation.dependenciesState_) {
@@ -52833,7 +52833,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             } else {
               try {
                 obj.get();
-              } catch (e) {
+              } catch (e7) {
                 untrackedEnd(prevUntracked);
                 allowStateReadsEnd(prevAllowStateReads);
                 return true;
@@ -52886,8 +52886,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     } else {
       try {
         result = f.call(context);
-      } catch (e) {
-        result = new CaughtException(e);
+      } catch (e7) {
+        result = new CaughtException(e7);
       }
     }
     globalState.inBatch--;
@@ -53228,8 +53228,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                 type: "scheduled-reaction"
               });
             }
-          } catch (e) {
-            this.reportExceptionInDerivation_(e);
+          } catch (e7) {
+            this.reportExceptionInDerivation_(e7);
           }
         }
         globalState.trackingContext = prev2;
@@ -53724,8 +53724,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           var ret;
           try {
             ret = action(name + " - runid: " + runId + " - yield " + stepId++, gen.next).call(gen, res3);
-          } catch (e) {
-            return reject(e);
+          } catch (e7) {
+            return reject(e7);
           }
           next2(ret);
         }
@@ -53734,8 +53734,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           var ret;
           try {
             ret = action(name + " - runid: " + runId + " - yield " + stepId++, gen["throw"]).call(gen, err);
-          } catch (e) {
-            return reject(e);
+          } catch (e7) {
+            return reject(e7);
           }
           next2(ret);
         }
@@ -53762,8 +53762,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           yieldedPromise.then(noop5, noop5);
           cancelPromise(yieldedPromise);
           rejector(new FlowCancellationError());
-        } catch (e) {
-          rejector(e);
+        } catch (e7) {
+          rejector(e7);
         }
       });
       return promise;
@@ -55569,13 +55569,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   var ENTRY_0 = /* @__PURE__ */ createArrayEntryDescriptor(0);
   var safariPrototypeSetterInheritanceBug = /* @__PURE__ */ (function() {
     var v = false;
-    var p = {};
-    Object.defineProperty(p, "0", {
+    var p2 = {};
+    Object.defineProperty(p2, "0", {
       set: function set4() {
         v = true;
       }
     });
-    Object.create(p)["0"] = 1;
+    Object.create(p2)["0"] = 1;
     return v === false;
   })();
   var OBSERVABLE_ARRAY_BUFFER_SIZE = 0;
@@ -55624,8 +55624,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       return Array.prototype.concat.apply(
         this.slice(),
         //@ts-ignore
-        arrays.map(function(a) {
-          return isObservableArray(a) ? a.slice() : a;
+        arrays.map(function(a4) {
+          return isObservableArray(a4) ? a4.slice() : a4;
         })
       );
     };
@@ -55777,27 +55777,27 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
   }
   var toString = objectPrototype.toString;
-  function deepEqual(a, b, depth) {
+  function deepEqual(a4, b, depth) {
     if (depth === void 0) {
       depth = -1;
     }
-    return eq(a, b, depth);
+    return eq(a4, b, depth);
   }
-  function eq(a, b, depth, aStack, bStack) {
-    if (a === b) {
-      return a !== 0 || 1 / a === 1 / b;
+  function eq(a4, b, depth, aStack, bStack) {
+    if (a4 === b) {
+      return a4 !== 0 || 1 / a4 === 1 / b;
     }
-    if (a == null || b == null) {
+    if (a4 == null || b == null) {
       return false;
     }
-    if (a !== a) {
+    if (a4 !== a4) {
       return b !== b;
     }
-    var type = typeof a;
+    var type = typeof a4;
     if (type !== "function" && type !== "object" && typeof b != "object") {
       return false;
     }
-    var className = toString.call(a);
+    var className = toString.call(a4);
     if (className !== toString.call(b)) {
       return false;
     }
@@ -55806,17 +55806,17 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       case "[object RegExp]":
       // RegExps are coerced to strings for comparison (Note: '' + /a/i === '/a/i')
       case "[object String]":
-        return "" + a === "" + b;
+        return "" + a4 === "" + b;
       case "[object Number]":
-        if (+a !== +a) {
+        if (+a4 !== +a4) {
           return +b !== +b;
         }
-        return +a === 0 ? 1 / +a === 1 / b : +a === +b;
+        return +a4 === 0 ? 1 / +a4 === 1 / b : +a4 === +b;
       case "[object Date]":
       case "[object Boolean]":
-        return +a === +b;
+        return +a4 === +b;
       case "[object Symbol]":
-        return typeof Symbol !== "undefined" && Symbol.valueOf.call(a) === Symbol.valueOf.call(b);
+        return typeof Symbol !== "undefined" && Symbol.valueOf.call(a4) === Symbol.valueOf.call(b);
       case "[object Map]":
       case "[object Set]":
         if (depth >= 0) {
@@ -55824,15 +55824,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         }
         break;
     }
-    a = unwrap(a);
+    a4 = unwrap(a4);
     b = unwrap(b);
     var areArrays = className === "[object Array]";
     if (!areArrays) {
-      if (typeof a != "object" || typeof b != "object") {
+      if (typeof a4 != "object" || typeof b != "object") {
         return false;
       }
-      var aCtor = a.constructor, bCtor = b.constructor;
-      if (aCtor !== bCtor && !(isFunction(aCtor) && aCtor instanceof aCtor && isFunction(bCtor) && bCtor instanceof bCtor) && "constructor" in a && "constructor" in b) {
+      var aCtor = a4.constructor, bCtor = b.constructor;
+      if (aCtor !== bCtor && !(isFunction(aCtor) && aCtor instanceof aCtor && isFunction(bCtor) && bCtor instanceof bCtor) && "constructor" in a4 && "constructor" in b) {
         return false;
       }
     }
@@ -55845,31 +55845,31 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     bStack = bStack || [];
     var length2 = aStack.length;
     while (length2--) {
-      if (aStack[length2] === a) {
+      if (aStack[length2] === a4) {
         return bStack[length2] === b;
       }
     }
-    aStack.push(a);
+    aStack.push(a4);
     bStack.push(b);
     if (areArrays) {
-      length2 = a.length;
+      length2 = a4.length;
       if (length2 !== b.length) {
         return false;
       }
       while (length2--) {
-        if (!eq(a[length2], b[length2], depth - 1, aStack, bStack)) {
+        if (!eq(a4[length2], b[length2], depth - 1, aStack, bStack)) {
           return false;
         }
       }
     } else {
-      var keys = Object.keys(a);
+      var keys = Object.keys(a4);
       var _length = keys.length;
       if (Object.keys(b).length !== _length) {
         return false;
       }
       for (var i = 0; i < _length; i++) {
         var key = keys[i];
-        if (!(hasProp(b, key) && eq(a[key], b[key], depth - 1, aStack, bStack))) {
+        if (!(hasProp(b, key) && eq(a4[key], b[key], depth - 1, aStack, bStack))) {
           return false;
         }
       }
@@ -55878,17 +55878,17 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     bStack.pop();
     return true;
   }
-  function unwrap(a) {
-    if (isObservableArray(a)) {
-      return a.slice();
+  function unwrap(a4) {
+    if (isObservableArray(a4)) {
+      return a4.slice();
     }
-    if (isES6Map(a) || isObservableMap(a)) {
-      return Array.from(a.entries());
+    if (isES6Map(a4) || isObservableMap(a4)) {
+      return Array.from(a4.entries());
     }
-    if (isES6Set(a) || isObservableSet(a)) {
-      return Array.from(a.entries());
+    if (isES6Set(a4) || isObservableSet(a4)) {
+      return Array.from(a4.entries());
     }
-    return a;
+    return a4;
   }
   var _global$Iterator;
   var global$1 = /* @__PURE__ */ getGlobal();
@@ -56121,8 +56121,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     adm.reaction.track(function() {
       try {
         renderResult = render();
-      } catch (e) {
-        exception = e;
+      } catch (e7) {
+        exception = e7;
       }
     });
     if (exception) {
@@ -56269,7 +56269,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
 
   // src/components/domain/admin/TournamentAdminConsole.tsx
-  var import_react18 = __toESM(require_react());
+  var import_react20 = __toESM(require_react());
 
   // src/components/shared/AppToast.tsx
   var import_jsx_runtime92 = __toESM(require_jsx_runtime());
@@ -57219,13 +57219,185 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
   };
 
+  // node_modules/@phosphor-icons/react/dist/defs/Check.es.js
+  var e = __toESM(require_react(), 1);
+  var a = /* @__PURE__ */ new Map([
+    [
+      "bold",
+      /* @__PURE__ */ e.createElement(e.Fragment, null, /* @__PURE__ */ e.createElement("path", { d: "M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z" }))
+    ],
+    [
+      "duotone",
+      /* @__PURE__ */ e.createElement(e.Fragment, null, /* @__PURE__ */ e.createElement(
+        "path",
+        {
+          d: "M232,56V200a16,16,0,0,1-16,16H40a16,16,0,0,1-16-16V56A16,16,0,0,1,40,40H216A16,16,0,0,1,232,56Z",
+          opacity: "0.2"
+        }
+      ), /* @__PURE__ */ e.createElement("path", { d: "M205.66,85.66l-96,96a8,8,0,0,1-11.32,0l-40-40a8,8,0,0,1,11.32-11.32L104,164.69l90.34-90.35a8,8,0,0,1,11.32,11.32Z" }))
+    ],
+    [
+      "fill",
+      /* @__PURE__ */ e.createElement(e.Fragment, null, /* @__PURE__ */ e.createElement("path", { d: "M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM205.66,85.66l-96,96a8,8,0,0,1-11.32,0l-40-40a8,8,0,0,1,11.32-11.32L104,164.69l90.34-90.35a8,8,0,0,1,11.32,11.32Z" }))
+    ],
+    [
+      "light",
+      /* @__PURE__ */ e.createElement(e.Fragment, null, /* @__PURE__ */ e.createElement("path", { d: "M228.24,76.24l-128,128a6,6,0,0,1-8.48,0l-56-56a6,6,0,0,1,8.48-8.48L96,191.51,219.76,67.76a6,6,0,0,1,8.48,8.48Z" }))
+    ],
+    [
+      "regular",
+      /* @__PURE__ */ e.createElement(e.Fragment, null, /* @__PURE__ */ e.createElement("path", { d: "M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z" }))
+    ],
+    [
+      "thin",
+      /* @__PURE__ */ e.createElement(e.Fragment, null, /* @__PURE__ */ e.createElement("path", { d: "M226.83,74.83l-128,128a4,4,0,0,1-5.66,0l-56-56a4,4,0,0,1,5.66-5.66L96,194.34,221.17,69.17a4,4,0,1,1,5.66,5.66Z" }))
+    ]
+  ]);
+
+  // node_modules/@phosphor-icons/react/dist/defs/WarningDiamond.es.js
+  var a2 = __toESM(require_react(), 1);
+  var e2 = /* @__PURE__ */ new Map([
+    [
+      "bold",
+      /* @__PURE__ */ a2.createElement(a2.Fragment, null, /* @__PURE__ */ a2.createElement("path", { d: "M128,68a12,12,0,0,1,12,12v52a12,12,0,0,1-24,0V80A12,12,0,0,1,128,68Zm0,88a16,16,0,1,0,16,16A16,16,0,0,0,128,156Zm116-28a19.86,19.86,0,0,1-5.84,14.11l-96,96.06a20,20,0,0,1-28.21,0h0l-96-96.06a20,20,0,0,1,0-28.22l96.05-96.06a20,20,0,0,1,28.21,0l96.06,96.06A19.86,19.86,0,0,1,244,128Zm-25.68,0L128,37.67,37.68,128,128,218.33Z" }))
+    ],
+    [
+      "duotone",
+      /* @__PURE__ */ a2.createElement(a2.Fragment, null, /* @__PURE__ */ a2.createElement(
+        "path",
+        {
+          d: "M229.67,133.62l-96,96a7.94,7.94,0,0,1-11.24,0l-96-96a7.94,7.94,0,0,1,0-11.24l96.05-96a7.94,7.94,0,0,1,11.24,0l96,96.05A7.94,7.94,0,0,1,229.67,133.62Z",
+          opacity: "0.2"
+        }
+      ), /* @__PURE__ */ a2.createElement("path", { d: "M128,72a8,8,0,0,1,8,8v56a8,8,0,0,1-16,0V80A8,8,0,0,1,128,72ZM116,172a12,12,0,1,0,12-12A12,12,0,0,0,116,172Zm124-44a15.85,15.85,0,0,1-4.67,11.28l-96.05,96.06a16,16,0,0,1-22.56,0h0l-96-96.06a16,16,0,0,1,0-22.56l96.05-96.06a16,16,0,0,1,22.56,0l96.05,96.06A15.85,15.85,0,0,1,240,128Zm-16,0L128,32,32,128,128,224h0Z" }))
+    ],
+    [
+      "fill",
+      /* @__PURE__ */ a2.createElement(a2.Fragment, null, /* @__PURE__ */ a2.createElement("path", { d: "M235.33,116.72,139.28,20.66a16,16,0,0,0-22.56,0l-96,96.06a16,16,0,0,0,0,22.56l96.05,96.06h0a16,16,0,0,0,22.56,0l96.05-96.06a16,16,0,0,0,0-22.56ZM120,80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm8,104a12,12,0,1,1,12-12A12,12,0,0,1,128,184Z" }))
+    ],
+    [
+      "light",
+      /* @__PURE__ */ a2.createElement(a2.Fragment, null, /* @__PURE__ */ a2.createElement("path", { d: "M122,136V80a6,6,0,0,1,12,0v56a6,6,0,0,1-12,0Zm6,26a10,10,0,1,0,10,10A10,10,0,0,0,128,162Zm110-34a13.82,13.82,0,0,1-4.09,9.86l-96,96.06a14,14,0,0,1-19.72,0h0l-96-96.06a13.93,13.93,0,0,1,0-19.72l96.05-96.06a14,14,0,0,1,19.72,0l96,96.06A13.82,13.82,0,0,1,238,128Zm-12,0a1.94,1.94,0,0,0-.57-1.38L129.38,30.56a2,2,0,0,0-2.76,0L30.57,126.62a2,2,0,0,0,0,2.76l96.05,96.06h0a2,2,0,0,0,2.76,0l96.05-96.06A1.94,1.94,0,0,0,226,128Z" }))
+    ],
+    [
+      "regular",
+      /* @__PURE__ */ a2.createElement(a2.Fragment, null, /* @__PURE__ */ a2.createElement("path", { d: "M128,72a8,8,0,0,1,8,8v56a8,8,0,0,1-16,0V80A8,8,0,0,1,128,72ZM116,172a12,12,0,1,0,12-12A12,12,0,0,0,116,172Zm124-44a15.85,15.85,0,0,1-4.67,11.28l-96.05,96.06a16,16,0,0,1-22.56,0h0l-96-96.06a16,16,0,0,1,0-22.56l96.05-96.06a16,16,0,0,1,22.56,0l96.05,96.06A15.85,15.85,0,0,1,240,128Zm-16,0L128,32,32,128,128,224h0Z" }))
+    ],
+    [
+      "thin",
+      /* @__PURE__ */ a2.createElement(a2.Fragment, null, /* @__PURE__ */ a2.createElement("path", { d: "M124,136V80a4,4,0,0,1,8,0v56a4,4,0,0,1-8,0Zm4,28a8,8,0,1,0,8,8A8,8,0,0,0,128,164Zm108-36a11.87,11.87,0,0,1-3.5,8.45l-96.05,96.06a12,12,0,0,1-16.9,0h0l-96-96.06a12,12,0,0,1,0-16.9l96.05-96.06a12,12,0,0,1,16.9,0l96.05,96.06A11.87,11.87,0,0,1,236,128Zm-8,0a3.9,3.9,0,0,0-1.16-2.79L130.79,29.15a4,4,0,0,0-5.58,0l-96,96.06a3.94,3.94,0,0,0,0,5.58l96.05,96.06a4,4,0,0,0,5.58,0l96.05-96.06A3.9,3.9,0,0,0,228,128Z" }))
+    ]
+  ]);
+
+  // node_modules/@phosphor-icons/react/dist/defs/X.es.js
+  var e3 = __toESM(require_react(), 1);
+  var a3 = /* @__PURE__ */ new Map([
+    [
+      "bold",
+      /* @__PURE__ */ e3.createElement(e3.Fragment, null, /* @__PURE__ */ e3.createElement("path", { d: "M208.49,191.51a12,12,0,0,1-17,17L128,145,64.49,208.49a12,12,0,0,1-17-17L111,128,47.51,64.49a12,12,0,0,1,17-17L128,111l63.51-63.52a12,12,0,0,1,17,17L145,128Z" }))
+    ],
+    [
+      "duotone",
+      /* @__PURE__ */ e3.createElement(e3.Fragment, null, /* @__PURE__ */ e3.createElement(
+        "path",
+        {
+          d: "M216,56V200a16,16,0,0,1-16,16H56a16,16,0,0,1-16-16V56A16,16,0,0,1,56,40H200A16,16,0,0,1,216,56Z",
+          opacity: "0.2"
+        }
+      ), /* @__PURE__ */ e3.createElement("path", { d: "M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z" }))
+    ],
+    [
+      "fill",
+      /* @__PURE__ */ e3.createElement(e3.Fragment, null, /* @__PURE__ */ e3.createElement("path", { d: "M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM181.66,170.34a8,8,0,0,1-11.32,11.32L128,139.31,85.66,181.66a8,8,0,0,1-11.32-11.32L116.69,128,74.34,85.66A8,8,0,0,1,85.66,74.34L128,116.69l42.34-42.35a8,8,0,0,1,11.32,11.32L139.31,128Z" }))
+    ],
+    [
+      "light",
+      /* @__PURE__ */ e3.createElement(e3.Fragment, null, /* @__PURE__ */ e3.createElement("path", { d: "M204.24,195.76a6,6,0,1,1-8.48,8.48L128,136.49,60.24,204.24a6,6,0,0,1-8.48-8.48L119.51,128,51.76,60.24a6,6,0,0,1,8.48-8.48L128,119.51l67.76-67.75a6,6,0,0,1,8.48,8.48L136.49,128Z" }))
+    ],
+    [
+      "regular",
+      /* @__PURE__ */ e3.createElement(e3.Fragment, null, /* @__PURE__ */ e3.createElement("path", { d: "M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z" }))
+    ],
+    [
+      "thin",
+      /* @__PURE__ */ e3.createElement(e3.Fragment, null, /* @__PURE__ */ e3.createElement("path", { d: "M202.83,197.17a4,4,0,0,1-5.66,5.66L128,133.66,58.83,202.83a4,4,0,0,1-5.66-5.66L122.34,128,53.17,58.83a4,4,0,0,1,5.66-5.66L128,122.34l69.17-69.17a4,4,0,1,1,5.66,5.66L133.66,128Z" }))
+    ]
+  ]);
+
+  // node_modules/@phosphor-icons/react/dist/lib/IconBase.es.js
+  var e4 = __toESM(require_react(), 1);
+
+  // node_modules/@phosphor-icons/react/dist/lib/context.es.js
+  var import_react17 = __toESM(require_react(), 1);
+  var o = (0, import_react17.createContext)({
+    color: "currentColor",
+    size: "1em",
+    weight: "regular",
+    mirrored: false
+  });
+
+  // node_modules/@phosphor-icons/react/dist/lib/IconBase.es.js
+  var p = e4.forwardRef(
+    (s, a4) => {
+      const {
+        alt: n4,
+        color: r3,
+        size: t,
+        weight: o5,
+        mirrored: c2,
+        children: i,
+        weights: m,
+        ...x
+      } = s, {
+        color: d = "currentColor",
+        size: l,
+        weight: f = "regular",
+        mirrored: g = false,
+        ...w
+      } = e4.useContext(o);
+      return /* @__PURE__ */ e4.createElement(
+        "svg",
+        {
+          ref: a4,
+          xmlns: "http://www.w3.org/2000/svg",
+          width: t != null ? t : l,
+          height: t != null ? t : l,
+          fill: r3 != null ? r3 : d,
+          viewBox: "0 0 256 256",
+          transform: c2 || g ? "scale(-1, 1)" : void 0,
+          ...w,
+          ...x
+        },
+        !!n4 && /* @__PURE__ */ e4.createElement("title", null, n4),
+        i,
+        m.get(o5 != null ? o5 : f)
+      );
+    }
+  );
+  p.displayName = "IconBase";
+
+  // node_modules/@phosphor-icons/react/dist/csr/Check.es.js
+  var e5 = __toESM(require_react(), 1);
+  var o2 = e5.forwardRef((c2, r3) => /* @__PURE__ */ e5.createElement(p, { ref: r3, ...c2, weights: a }));
+  o2.displayName = "CheckIcon";
+
+  // node_modules/@phosphor-icons/react/dist/csr/WarningDiamond.es.js
+  var o3 = __toESM(require_react(), 1);
+  var n = o3.forwardRef((a4, r3) => /* @__PURE__ */ o3.createElement(p, { ref: r3, ...a4, weights: e2 }));
+  n.displayName = "WarningDiamondIcon";
+
+  // node_modules/@phosphor-icons/react/dist/csr/X.es.js
+  var o4 = __toESM(require_react(), 1);
+  var e6 = o4.forwardRef((r3, t) => /* @__PURE__ */ o4.createElement(p, { ref: t, ...r3, weights: a3 }));
+  e6.displayName = "XIcon";
+
   // src/components/domain/admin/workspace/BowlersTab.tsx
-  var import_react17 = __toESM(require_react());
+  var import_react19 = __toESM(require_react());
   var import_jsx_runtime93 = __toESM(require_jsx_runtime());
   function statusMarker(status) {
-    if (status === "complete") return "\u2713";
-    if (status === "partial") return "\u26A0";
-    return "\u2716";
+    if (status === "complete") return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(o2, { color: "green" });
+    if (status === "partial") return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(n, { color: "orange" });
+    return /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(e6, { color: "red" });
   }
   function getTeamLabel(team) {
     return `${team} Team`;
@@ -57243,14 +57415,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return Number.isInteger(digit) && digit >= 1 && digit <= 9 ? digit : Number.MAX_SAFE_INTEGER;
   }
   var BowlersTab = observer(function BowlersTab2({ store }) {
-    const [selectedZone, setSelectedZone] = (0, import_react17.useState)(TOURNAMENT_ZONE_OPTIONS[0]);
-    const [selectedTeam, setSelectedTeam] = (0, import_react17.useState)(TOURNAMENT_TEAM_OPTIONS[0].value);
-    const [expandedZones, setExpandedZones] = (0, import_react17.useState)([TOURNAMENT_ZONE_OPTIONS[0]]);
-    const [searchInput, setSearchInput] = (0, import_react17.useState)("");
-    const [activeSearch, setActiveSearch] = (0, import_react17.useState)("");
-    const [searchScope, setSearchScope] = (0, import_react17.useState)("team");
-    const [dialogOpen, setDialogOpen] = (0, import_react17.useState)(false);
-    const zones = (0, import_react17.useMemo)(() => {
+    const [selectedZone, setSelectedZone] = (0, import_react19.useState)(TOURNAMENT_ZONE_OPTIONS[0]);
+    const [selectedTeam, setSelectedTeam] = (0, import_react19.useState)(TOURNAMENT_TEAM_OPTIONS[0].value);
+    const [expandedZones, setExpandedZones] = (0, import_react19.useState)([TOURNAMENT_ZONE_OPTIONS[0]]);
+    const [searchInput, setSearchInput] = (0, import_react19.useState)("");
+    const [activeSearch, setActiveSearch] = (0, import_react19.useState)("");
+    const [searchScope, setSearchScope] = (0, import_react19.useState)("team");
+    const [dialogOpen, setDialogOpen] = (0, import_react19.useState)(false);
+    const zones = (0, import_react19.useMemo)(() => {
       const set4 = new Set(TOURNAMENT_ZONE_OPTIONS);
       for (const entry of store.roster) {
         if (Number.isInteger(entry.zone)) {
@@ -57259,7 +57431,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       return Array.from(set4).sort((left, right) => left - right);
     }, [store.roster]);
-    const progressByTeam = (0, import_react17.useMemo)(() => {
+    const progressByTeam = (0, import_react19.useMemo)(() => {
       const rows = [];
       for (const zone of zones) {
         for (const teamOption of TOURNAMENT_TEAM_OPTIONS) {
@@ -57282,7 +57454,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       return rows;
     }, [store.roster, zones]);
-    const defaultSelection = (0, import_react17.useMemo)(() => {
+    const defaultSelection = (0, import_react19.useMemo)(() => {
       if (progressByTeam.length === 0) {
         return {
           zone: TOURNAMENT_ZONE_OPTIONS[0],
@@ -57299,11 +57471,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       return { zone: progressByTeam[0].zone, team: progressByTeam[0].team };
     }, [progressByTeam]);
-    (0, import_react17.useEffect)(() => {
+    (0, import_react19.useEffect)(() => {
       setSelectedZone(defaultSelection.zone);
       setSelectedTeam(defaultSelection.team);
     }, [defaultSelection.zone, defaultSelection.team]);
-    (0, import_react17.useEffect)(() => {
+    (0, import_react19.useEffect)(() => {
       setExpandedZones((current) => {
         if (current.includes(selectedZone)) return current;
         return [...current, selectedZone];
@@ -57315,7 +57487,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const filledRosterPositions = progressByTeam.reduce((total, item) => total + item.filledPositions, 0);
     const requiredRosterPositions = totalTeamCount * 7;
     const completionPercent = requiredRosterPositions ? Math.min(100, Math.round(filledRosterPositions / requiredRosterPositions * 100)) : 0;
-    const scopedRoster = (0, import_react17.useMemo)(() => {
+    const scopedRoster = (0, import_react19.useMemo)(() => {
       if (searchScope === "team") {
         return store.roster.filter((entry) => entry.zone === selectedZone && normalizeTeam(entry.team) === selectedTeam);
       }
@@ -57324,7 +57496,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       return store.roster;
     }, [searchScope, selectedZone, selectedTeam, store.roster]);
-    const filteredScopedRoster = (0, import_react17.useMemo)(() => {
+    const filteredScopedRoster = (0, import_react19.useMemo)(() => {
       const search = activeSearch.trim().toLowerCase();
       if (!search) {
         return scopedRoster;
@@ -57336,11 +57508,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         return name.includes(search) || c5Number.includes(search) || team.includes(search) || String(entry.zone).includes(search) || String(entry.bowlerId).includes(search);
       });
     }, [activeSearch, scopedRoster]);
-    const coachRoster = (0, import_react17.useMemo)(
+    const coachRoster = (0, import_react19.useMemo)(
       () => filteredScopedRoster.filter((entry) => entry.zone === selectedZone && normalizeTeam(entry.team) === selectedTeam && entry.isCoach).sort((left, right) => String(left.name || "").localeCompare(String(right.name || ""))),
       [filteredScopedRoster, selectedZone, selectedTeam]
     );
-    const playerRoster = (0, import_react17.useMemo)(
+    const playerRoster = (0, import_react19.useMemo)(
       () => filteredScopedRoster.filter((entry) => entry.zone === selectedZone && normalizeTeam(entry.team) === selectedTeam && !entry.isCoach).sort((left, right) => getPositionFromBowlerId2(left) - getPositionFromBowlerId2(right)),
       [filteredScopedRoster, selectedZone, selectedTeam]
     );
@@ -57522,7 +57694,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                         ] }),
                         /* @__PURE__ */ (0, import_jsx_runtime93.jsxs)("span", { children: [
                           teamItem.filledPositions,
-                          "/6"
+                          "/7"
                         ] })
                       ]
                     },
@@ -57557,14 +57729,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                 ] }),
                 /* @__PURE__ */ (0, import_jsx_runtime93.jsxs)(Typography_default, { color: "text.secondary", sx: { mt: 0.5 }, children: [
                   selectedTeamProgress.filledPositions,
-                  " of 6 roster positions filled"
+                  " positions filled"
                 ] }),
                 /* @__PURE__ */ (0, import_jsx_runtime93.jsxs)(Stack_default, { direction: "row", spacing: 1, sx: { mt: 1 }, children: [
                   /* @__PURE__ */ (0, import_jsx_runtime93.jsx)(
                     Chip_default,
                     {
                       size: "small",
-                      label: `${statusMarker(selectedTeamProgress.status)} ${selectedTeamProgress.status.toUpperCase()}`,
+                      label: `${selectedTeamProgress.status.toUpperCase()}`,
                       color: selectedTeamProgress.isComplete ? "success" : selectedTeamProgress.status === "partial" ? "warning" : "default"
                     }
                   ),
@@ -58248,7 +58420,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           ] })
         ] }) })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(Stack_default, { spacing: 2, children: Object.keys(grouped).length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(Typography_default, { color: "text.secondary", children: "No scheduled matches yet." }) : Object.entries(grouped).sort(([a], [b]) => a.localeCompare(b)).map(([day, slots]) => /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(Stack_default, { spacing: 2, children: Object.keys(grouped).length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime97.jsx)(Typography_default, { color: "text.secondary", children: "No scheduled matches yet." }) : Object.entries(grouped).sort(([a4], [b]) => a4.localeCompare(b)).map(([day, slots]) => /* @__PURE__ */ (0, import_jsx_runtime97.jsxs)(
         Paper_default,
         {
           elevation: 0,
@@ -58395,8 +58567,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     ] }) });
   }
   var TournamentAdminConsole = observer(function TournamentAdminConsole2() {
-    const store = (0, import_react18.useMemo)(() => new TournamentAdminStore(), []);
-    (0, import_react18.useEffect)(() => {
+    const store = (0, import_react20.useMemo)(() => new TournamentAdminStore(), []);
+    (0, import_react20.useEffect)(() => {
       const handlePopState = () => {
         store.syncFromUrl();
       };
@@ -58605,10 +58777,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
 
   // src/components/shared/layout/PageHeader.tsx
-  var import_react19 = __toESM(require_react());
+  var import_react21 = __toESM(require_react());
   var import_jsx_runtime100 = __toESM(require_jsx_runtime());
   function PageHeader({ siteName, logoLabel, menuItems }) {
-    const [anchorEl, setAnchorEl] = (0, import_react19.useState)(null);
+    const [anchorEl, setAnchorEl] = (0, import_react21.useState)(null);
     function handleOpenMenu(event) {
       setAnchorEl(event.currentTarget);
     }
@@ -58813,12 +58985,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   // src/app.tsx
   var import_jsx_runtime103 = __toESM(require_jsx_runtime());
   function App() {
-    const isAdminRoute = (0, import_react20.useMemo)(() => window.location.pathname.startsWith("/admin"), []);
-    const [loginOpen, setLoginOpen] = (0, import_react20.useState)(false);
-    const [checkingSession, setCheckingSession] = (0, import_react20.useState)(isAdminRoute);
-    const [authenticated, setAuthenticated] = (0, import_react20.useState)(!isAdminRoute);
-    const [authError, setAuthError] = (0, import_react20.useState)("");
-    (0, import_react20.useEffect)(() => {
+    const isAdminRoute = (0, import_react22.useMemo)(() => window.location.pathname.startsWith("/admin"), []);
+    const [loginOpen, setLoginOpen] = (0, import_react22.useState)(false);
+    const [checkingSession, setCheckingSession] = (0, import_react22.useState)(isAdminRoute);
+    const [authenticated, setAuthenticated] = (0, import_react22.useState)(!isAdminRoute);
+    const [authError, setAuthError] = (0, import_react22.useState)("");
+    (0, import_react22.useEffect)(() => {
       if (!isAdminRoute) {
         return;
       }
