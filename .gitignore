@@ -17,3 +17,5 @@ logs
 # Data file (optional, if you don’t want committed user submissions)
 data.json
 external/
+./data/bc5-stats.sqlite
+data/bc5-stats.sqlite
