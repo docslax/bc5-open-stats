@@ -11,8 +11,8 @@ import {
   Typography,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { FormEvent } from 'react';
-import { TournamentAdminStore } from '../../../../stores/admin/TournamentAdminStore';
+import { type SyntheticEvent } from 'react';
+import { TournamentAdminStore } from '@stores/admin/TournamentAdminStore';
 
 interface ScheduleTabProps {
   store: TournamentAdminStore;
@@ -26,7 +26,7 @@ export const ScheduleTab = observer(function ScheduleTab({ store }: ScheduleTabP
     return accumulator;
   }, {});
 
-  function onSaveMatch(event: FormEvent<HTMLFormElement>) {
+  function onSaveMatch(event: SyntheticEvent<HTMLFormElement, SubmitEvent>) {
     event.preventDefault();
     void store.saveDrawSlot();
   }

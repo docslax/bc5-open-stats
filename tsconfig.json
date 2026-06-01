@@ -12,7 +12,14 @@
     "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@services/*": ["./src/services/*"],
+      "@components/*": ["./src/components/*"],
+      "@constants/*": ["./src/constants/*"],
+      "@stores/*": ["./src/stores/*"]
+    }
   },
   "include": ["src/**/*"]
 }

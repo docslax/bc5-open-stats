@@ -49321,11 +49321,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   // src/components/domain/admin/AdminLoginModal.tsx
   var import_react10 = __toESM(require_react());
   var import_jsx_runtime85 = __toESM(require_jsx_runtime());
-  function AdminLoginModal({
-    open,
-    onClose,
-    onSuccess
-  }) {
+  function AdminLoginModal({ open, onClose, onSuccess }) {
     const [username, setUsername] = (0, import_react10.useState)("");
     const [password, setPassword] = (0, import_react10.useState)("");
     const [error, setError] = (0, import_react10.useState)("");
@@ -49382,25 +49378,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             fullWidth: true
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime85.jsxs)(
-          DialogActions_default,
-          {
-            sx: { px: 0, pb: 0, pt: 0.5, justifyContent: "flex-end" },
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(Button_default, { onClick: onClose, color: "inherit", size: "small", children: "Cancel" }),
-              /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(
-                Button_default,
-                {
-                  type: "submit",
-                  variant: "contained",
-                  disabled: loading,
-                  size: "small",
-                  children: loading ? "Signing in\u2026" : "Sign in"
-                }
-              )
-            ]
-          }
-        )
+        /* @__PURE__ */ (0, import_jsx_runtime85.jsxs)(DialogActions_default, { sx: { px: 0, pb: 0, pt: 0.5, justifyContent: "flex-end" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(Button_default, { onClick: onClose, color: "inherit", size: "small", children: "Cancel" }),
+          /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(Button_default, { type: "submit", variant: "contained", disabled: loading, size: "small", children: loading ? "Signing in\u2026" : "Sign in" })
+        ] })
       ] }) }) })
     ] });
   }

@@ -1,5 +1,5 @@
 import { Button, Stack, Typography } from '@mui/material';
-import { SectionCard } from '../../shared/SectionCard';
+import { SectionCard } from '@components/shared/SectionCard';
 
 export function TournamentSetupPanel() {
   return (
@@ -11,7 +11,9 @@ export function TournamentSetupPanel() {
         <Typography variant="body2" color="text.secondary">
           The next step is to wire this area into the real tournament/year/location/team APIs.
         </Typography>
-        <Button variant="contained" href="/admin/">Open admin console</Button>
+        <Button variant="contained" href="/admin/">
+          Open admin console
+        </Button>
       </Stack>
     </SectionCard>
   );

@@ -1,14 +1,5 @@
-import {
-  Alert,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Stack,
-  TextField,
-} from "@mui/material";
-import { useState } from "react";
+import { Alert, Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField } from '@mui/material';
+import { useState, type SyntheticEvent } from 'react';
 
 interface AdminLoginModalProps {
   open: boolean;
@@ -16,41 +7,37 @@ interface AdminLoginModalProps {
   onSuccess: () => void;
 }
 
-export function AdminLoginModal({
-  open,
-  onClose,
-  onSuccess,
-}: AdminLoginModalProps) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+export function AdminLoginModal({ open, onClose, onSuccess }: AdminLoginModalProps) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: SyntheticEvent<HTMLFormElement, SubmitEvent>) {
     event.preventDefault();
     setLoading(true);
-    setError("");
+    setError('');
 
     try {
-      const response = await fetch("/api/admin/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
+      const response = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ username, password }),
       });
       const result = await response.json();
 
       if (!response.ok) {
-        setError(result.error || "Unable to sign in.");
+        setError(result.error || 'Unable to sign in.');
         return;
       }
 
       onSuccess();
       onClose();
-      setUsername("");
-      setPassword("");
+      setUsername('');
+      setPassword('');
     } catch (caughtError) {
-      setError("Unable to reach the login service.");
+      setError('Unable to reach the login service.');
       console.error(caughtError);
     } finally {
       setLoading(false);
@@ -79,19 +66,12 @@ export function AdminLoginModal({
               required
               fullWidth
             />
-            <DialogActions
-              sx={{ px: 0, pb: 0, pt: 0.5, justifyContent: "flex-end" }}
-            >
+            <DialogActions sx={{ px: 0, pb: 0, pt: 0.5, justifyContent: 'flex-end' }}>
               <Button onClick={onClose} color="inherit" size="small">
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                variant="contained"
-                disabled={loading}
-                size="small"
-              >
-                {loading ? "Signing in…" : "Sign in"}
+              <Button type="submit" variant="contained" disabled={loading} size="small">
+                {loading ? 'Signing in…' : 'Sign in'}
               </Button>
             </DialogActions>
           </Stack>

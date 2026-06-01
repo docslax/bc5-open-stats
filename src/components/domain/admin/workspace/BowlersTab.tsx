@@ -13,20 +13,20 @@ import {
   Typography,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { FormEvent } from 'react';
+import { type SyntheticEvent } from 'react';
 import {
   TOURNAMENT_POSITION_OPTIONS,
   TOURNAMENT_TEAM_OPTIONS,
   TOURNAMENT_ZONE_OPTIONS,
-} from '../../../../constants/tournamentAdmin';
-import { TournamentAdminStore } from '../../../../stores/admin/TournamentAdminStore';
+} from '@constants/tournamentAdmin';
+import { TournamentAdminStore } from '@stores/admin/TournamentAdminStore';
 
 interface BowlersTabProps {
   store: TournamentAdminStore;
 }
 
 export const BowlersTab = observer(function BowlersTab({ store }: BowlersTabProps) {
-  function onSaveBowler(event: FormEvent<HTMLFormElement>) {
+  function onSaveBowler(event: SyntheticEvent<HTMLFormElement, SubmitEvent>) {
     event.preventDefault();
     void store.saveBowlerAndRoster();
   }

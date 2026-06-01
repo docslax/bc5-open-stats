@@ -1,7 +1,7 @@
 import { Box, Button, Chip, Paper, Stack, TextField, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { FormEvent } from 'react';
-import { TournamentAdminStore } from '../../../../stores/admin/TournamentAdminStore';
+import { type SyntheticEvent } from 'react';
+import { TournamentAdminStore } from '@stores/admin/TournamentAdminStore';
 
 function checklistMarker(state: 'ok' | 'warn' | 'error'): string {
   if (state === 'ok') return '✔';
@@ -14,7 +14,7 @@ interface OverviewTabProps {
 }
 
 export const OverviewTab = observer(function OverviewTab({ store }: OverviewTabProps) {
-  function onSaveTournamentDetails(event: FormEvent<HTMLFormElement>) {
+  function onSaveTournamentDetails(event: SyntheticEvent<HTMLFormElement, SubmitEvent>) {
     event.preventDefault();
     void store.saveTournamentDetails();
   }

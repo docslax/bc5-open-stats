@@ -1,15 +1,15 @@
 import { Box, Button, Paper, Stack, TextField, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { FormEvent } from 'react';
-import { LocationRecord } from '../../../../services/adminApi';
-import { TournamentAdminStore } from '../../../../stores/admin/TournamentAdminStore';
+import { type SyntheticEvent } from 'react';
+import { LocationRecord } from '@services/adminApi';
+import { TournamentAdminStore } from '@stores/admin/TournamentAdminStore';
 
 interface LocationsTabProps {
   store: TournamentAdminStore;
 }
 
 export const LocationsTab = observer(function LocationsTab({ store }: LocationsTabProps) {
-  function onSaveLocation(event: FormEvent<HTMLFormElement>) {
+  function onSaveLocation(event: SyntheticEvent<HTMLFormElement, SubmitEvent>) {
     event.preventDefault();
     void store.saveLocation();
   }

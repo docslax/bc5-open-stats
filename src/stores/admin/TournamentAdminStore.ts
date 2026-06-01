@@ -23,12 +23,12 @@ import {
   updateDrawSlot,
   updateLocation,
   updateTournament,
-} from '../../services/adminApi';
+} from '@services/adminApi';
 import {
   TOURNAMENT_POSITION_OPTIONS,
   TOURNAMENT_TEAM_OPTIONS,
   TOURNAMENT_ZONE_OPTIONS,
-} from '../../constants/tournamentAdmin';
+} from '@constants/tournamentAdmin';
 
 export type AdminViewMode = 'list' | 'create' | 'workspace';
 export type WorkspaceTab = 'overview' | 'bowlers' | 'schedule' | 'locations' | 'publish';

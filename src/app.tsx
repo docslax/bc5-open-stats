@@ -3,12 +3,12 @@ import { ThemeProvider } from '@mui/material/styles';
 import { createRoot } from 'react-dom/client';
 import { Alert, Stack, Typography } from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
-import { AdminBodyPlaceholder } from './components/domain/admin/AdminBodyPlaceholder';
-import { AdminLoginModal } from './components/domain/admin/AdminLoginModal';
-import { TournamentAdminConsole } from './components/domain/admin/TournamentAdminConsole';
-import { HeaderMenuItem } from './components/shared/layout/PageHeader';
-import { PageLayout } from './components/shared/layout/PageLayout';
-import { APP_TITLE, ADMIN_LAYOUT_BREADCRUMBS } from './constants/ui';
+import { AdminBodyPlaceholder } from '@components/domain/admin/AdminBodyPlaceholder';
+import { AdminLoginModal } from '@components/domain/admin/AdminLoginModal';
+import { TournamentAdminConsole } from '@components/domain/admin/TournamentAdminConsole';
+import { HeaderMenuItem } from '@components/shared/layout/PageHeader';
+import { PageLayout } from '@components/shared/layout/PageLayout';
+import { APP_TITLE, ADMIN_LAYOUT_BREADCRUMBS } from '@constants/ui';
 import { appTheme } from './styles/theme';
 
 function App() {

@@ -1,6 +1,6 @@
 import { Button, Chip, Paper, Stack, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { TournamentAdminStore } from '../../../../stores/admin/TournamentAdminStore';
+import { TournamentAdminStore } from '@stores/admin/TournamentAdminStore';
 
 interface PublishTabProps {
   store: TournamentAdminStore;

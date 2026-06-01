@@ -12,9 +12,9 @@ import {
   Typography,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { FormEvent, useEffect, useMemo } from 'react';
-import { AppToast } from '../../shared/AppToast';
-import { TournamentAdminStore, WorkspaceTab } from '../../../stores/admin/TournamentAdminStore';
+import { type SyntheticEvent, useEffect, useMemo } from 'react';
+import { AppToast } from '@components/shared/AppToast';
+import { TournamentAdminStore, WorkspaceTab } from '@stores/admin/TournamentAdminStore';
 import { BowlersTab } from './workspace/BowlersTab';
 import { LocationsTab } from './workspace/LocationsTab';
 import { OverviewTab } from './workspace/OverviewTab';
@@ -37,7 +37,10 @@ function renderWorkspaceTab(store: TournamentAdminStore, tab: WorkspaceTab) {
   return <PublishTab store={store} />;
 }
 
-function renderCreateForm(store: TournamentAdminStore, onSubmit: (event: FormEvent<HTMLFormElement>) => void) {
+function renderCreateForm(
+  store: TournamentAdminStore,
+  onSubmit: (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => void,
+) {
   return (
     <Box component="form" onSubmit={onSubmit}>
       <Stack spacing={2}>
